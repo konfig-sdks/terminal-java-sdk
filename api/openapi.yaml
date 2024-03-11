@@ -1,0 +1,4288 @@
+openapi: 3.0.3
+info:
+  contact: {}
+  description: |-
+    Terminal is a unified API that makes it easy to integrate with the leading telematics service providers.
+
+    Contact Support:
+     Name: Terminal
+     Email: connect@withterminal.com
+  title: Terminal API
+  version: 1.0.0
+  x-konfig-ignore:
+    object-with-no-properties: true
+    potential-incorrect-type: true
+  x-konfig-has-globally-required-security: true
+servers:
+- url: https://api.sandbox.withterminal.com/tsp/v1
+security:
+- bearerAuth: []
+tags:
+- description: ""
+  name: Vehicles
+- description: ""
+  name: Connections
+- description: ""
+  name: Data Management
+- description: ""
+  name: Hours of Service
+- description: ""
+  name: Drivers
+- description: ""
+  name: Issues
+- description: ""
+  name: Trailers
+- description: ""
+  name: Authentication
+- description: ""
+  name: Groups
+- description: ""
+  name: IFTA
+- description: ""
+  name: Providers
+- description: ""
+  name: Safety
+- description: ""
+  name: Trips
+- description: ""
+  name: Webhook Events
+paths:
+  /public-token/exchange:
+    post:
+      description: Exchange the `publicToken` returned by our hosted authentication
+        flow for a long lived connection token that will be used when requesting data
+        from a customer's TSP.
+      operationId: Authentication_exchangeToken
+      requestBody:
+        content:
+          application/json:
+            examples:
+              Public Token Exchange:
+                value:
+                  publicToken: INSERT_PUBLIC_TOKEN
+            schema:
+              $ref: '#/components/schemas/AuthenticationExchangeTokenRequest'
+      responses:
+        "200":
+          description: ""
+      summary: Public Token Exchange
+      tags:
+      - Authentication
+      x-konfig-operation-can-have-single-parameter: true
+      x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-post--public-token-exchange
+      x-content-type: application/json
+      x-accepts: application/json
+  /connections:
+    get:
+      description: List all of the connections you have for your application. Connections
+        represent the authenticated access you have to your customer's TSP data.
+      operationId: Connections_listAll
+      parameters:
+      - description: Pagination cursor to start requests from
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          example: "{{nextCursor}}"
+          type: string
+          x-konfig-original-example: "{{nextCursor}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--connections-get-parameters-0-schema
+        style: form
+      - description: The maximum number of results to return in a page.
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          example: "1"
+          type: string
+          x-konfig-original-example: "1"
+          x-konfig-generated-schema: konfig-generated-schema-paths--connections-get-parameters-1-schema
+        style: form
+      - explode: true
+        in: query
+        name: externalId
+        required: false
+        schema:
+          example: "123"
+          type: string
+          x-konfig-original-example: "123"
+          x-konfig-generated-schema: konfig-generated-schema-paths--connections-get-parameters-2-schema
+        style: form
+      - explode: true
+        in: query
+        name: dotNumber
+        required: false
+        schema:
+          example: "123"
+          type: string
+          x-konfig-original-example: "123"
+          x-konfig-generated-schema: konfig-generated-schema-paths--connections-get-parameters-3-schema
+        style: form
+      - description: Filter connections by tag
+        explode: true
+        in: query
+        name: tag
+        required: false
+        schema:
+          example: tempor in aliqua
+          type: string
+          x-konfig-original-example: tempor in aliqua
+          x-konfig-generated-schema: konfig-generated-schema-paths--connections-get-parameters-4-schema
+        style: form
+      responses:
+        "200":
+          description: ""
+      summary: List All Connections
+      tags:
+      - Connections
+      x-konfig-operation-can-have-single-parameter: true
+      x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-get--connections
+      x-accepts: application/json
+    post:
+      description: |-
+        Create a new connection via API. This endpoint can be used to provide a completely custom connection creation experience for your customers.
+
+        For most use cases we recommend using the [Link UI](./rhuaxk9205cn8-link-component) to create connections.
+      operationId: Connections_createCustomConnection
+      requestBody:
+        content:
+          application/json:
+            examples:
+              Create Connection:
+                value:
+                  tags:
+                  - Tag Name
+                  - Tag Name
+                  backfill:
+                    days: 4.589623110260823E7
+                    startFrom: 2021-01-06T03:24:53.000Z
+                  company:
+                    dotNumbers:
+                    - tempor ea cupidatat incididunt proident
+                    - cupidatat occaecat do enim
+                    name: minim nostrud
+                  credentials:
+                    database: amet ut laborum est
+                    password: esse ut nostrud
+                    username: nisi in culpa
+                  externalId: ullamco dolore ipsum
+                  provider: geotab
+                  syncMode: automatic
+            schema:
+              $ref: '#/components/schemas/ConnectionsCreateCustomConnectionRequest'
+      responses:
+        "200":
+          description: ""
+      summary: Create Connection
+      tags:
+      - Connections
+      x-konfig-operation-can-have-single-parameter: true
+      x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-post--connections
+      x-content-type: application/json
+      x-accepts: application/json
+  /connections/current:
+    get:
+      description: Get the details of the current active connection. The current connection
+        is derived from the provided connection token.
+      operationId: Connections_getCurrentDetails
+      parameters:
+      - description: (Required) The token returned when a user authenticated their
+          account. This authorizes access to a specific account.
+        explode: false
+        in: header
+        name: connection-token
+        required: false
+        schema:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--connections-current-get-parameters-0-schema
+        style: simple
+      responses:
+        "200":
+          description: ""
+      summary: Get Current Connection
+      tags:
+      - Connections
+      x-konfig-operation-can-have-single-parameter: true
+      x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-get--connections-current
+      x-accepts: application/json
+    patch:
+      description: Update the details of the current active connection. The current
+        connection is derived from the provided connection token.
+      operationId: Connections_updateCurrentConnectionDetails
+      parameters:
+      - description: (Required) The token returned when a user authenticated their
+          account. This authorizes access to a specific account.
+        explode: false
+        in: header
+        name: connection-token
+        required: false
+        schema:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--connections-current-patch-parameters-0-schema
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            examples:
+              Update Current Connection:
+                value:
+                  tags:
+                  - dolor in magna
+                  - reprehenderit dolor nostrud
+                  company:
+                    name: Acme Inc.
+                  externalId: ad sed dolore cupidatat
+                  status: laborum sed consectetur
+                  syncMode: automatic
+            schema:
+              $ref: '#/components/schemas/ConnectionsUpdateCurrentConnectionDetailsRequest'
+      responses:
+        "200":
+          description: ""
+      summary: Update Current Connection
+      tags:
+      - Connections
+      x-konfig-operation-can-have-single-parameter: true
+      x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-patch--connections-current
+      x-content-type: application/json
+      x-accepts: application/json
+  /syncs:
+    get:
+      description: List a log of all batch sync jobs for the current connection.
+      operationId: DataManagement_listSyncHistory
+      parameters:
+      - description: The maximum number of results to return in a page.
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          example: "1"
+          type: string
+          x-konfig-original-example: "1"
+          x-konfig-generated-schema: konfig-generated-schema-paths--syncs-get-parameters-0-schema
+        style: form
+      - description: Pagination cursor to start requests from
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          example: "{{nextCursor}}"
+          type: string
+          x-konfig-original-example: "{{nextCursor}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--syncs-get-parameters-1-schema
+        style: form
+      - explode: true
+        in: query
+        name: status
+        required: false
+        schema:
+          example: in_progress
+          type: string
+          x-konfig-original-example: in_progress
+          x-konfig-generated-schema: konfig-generated-schema-paths--syncs-get-parameters-2-schema
+        style: form
+      - description: Expand related resources in the response to reduce requests.
+        explode: true
+        in: query
+        name: expand
+        required: false
+        schema:
+          example: ""
+          type: string
+          x-konfig-original-example: ""
+          x-konfig-generated-schema: konfig-generated-schema-paths--syncs-get-parameters-3-schema
+        style: form
+      - description: (Required) The token returned when a user authenticated their
+          account. This authorizes access to a specific account.
+        explode: false
+        in: header
+        name: connection-token
+        required: false
+        schema:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--syncs-get-parameters-4-schema
+        style: simple
+      responses:
+        "200":
+          description: ""
+      summary: List Sync History
+      tags:
+      - Data Management
+      x-konfig-operation-can-have-single-parameter: true
+      x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-get--syncs
+      x-accepts: application/json
+    post:
+      description: |-
+        Manually request to sync the current connections data.
+
+        By default, Terminal will sync all connections where `syncMode = automatic` on a regular cadence. For customers that may not need a fleet's data to be kept up to date and want to reduce their active tracked trucks, you can set `syncMode = manual` and invoke this endpoint when you want to sync data.
+
+        If you're wondering if this is relevent to your use case then feel free to reach out and we'd be happy to assist.
+      operationId: DataManagement_requestSyncManual
+      parameters:
+      - description: (Required) The token returned when a user authenticated their
+          account. This authorizes access to a specific account.
+        explode: false
+        in: header
+        name: connection-token
+        required: false
+        schema:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--syncs-post-parameters-0-schema
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            examples:
+              Request Sync:
+                value:
+                  days: 7
+            schema:
+              $ref: '#/components/schemas/DataManagementRequestSyncManualRequest'
+      responses:
+        "200":
+          description: ""
+      summary: Request Sync
+      tags:
+      - Data Management
+      x-konfig-operation-can-have-single-parameter: true
+      x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-post--syncs
+      x-content-type: application/json
+      x-accepts: application/json
+  /syncs/{id}:
+    get:
+      description: Get the status of a sync job by ID.
+      operationId: DataManagement_getSyncStatus
+      parameters:
+      - description: '(Required) '
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          example: "{{syncId}}"
+          type: string
+          x-konfig-original-example: "{{syncId}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--syncs-id-parameters-0-schema
+        style: simple
+      - description: Expand related resources in the response to reduce requests.
+        explode: true
+        in: query
+        name: expand
+        required: false
+        schema:
+          example: ""
+          type: string
+          x-konfig-original-example: ""
+          x-konfig-generated-schema: konfig-generated-schema-paths--syncs-id-get-parameters-0-schema
+        style: form
+      - description: (Required) The token returned when a user authenticated their
+          account. This authorizes access to a specific account.
+        explode: false
+        in: header
+        name: connection-token
+        required: false
+        schema:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--syncs-id-get-parameters-1-schema
+        style: simple
+      responses:
+        "200":
+          description: ""
+      summary: Get Sync Job Status
+      tags:
+      - Data Management
+      x-konfig-operation-can-have-single-parameter: true
+      x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-get--syncs-id
+      x-accepts: application/json
+  /passthrough:
+    post:
+      description: "Make an authenticated request to the underlying telematics provider.\
+        \ \n\nThis endpoint helps ensure that you are never limited by Terminal. You\
+        \ can use passthrough requests to access capabilities that may be limited\
+        \ to a specific TSP or not yet in the normalized model.\n\nOur team is here\
+        \ an ready to support custom use cases that may need `/passthrough`"
+      operationId: DataManagement_makePassthroughRequest
+      parameters:
+      - description: (Required) The token returned when a user authenticated their
+          account. This authorizes access to a specific account.
+        explode: false
+        in: header
+        name: connection-token
+        required: false
+        schema:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--passthrough-post-parameters-0-schema
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            examples:
+              Passthrough:
+                value:
+                  body: "{\"reportId\":\"1234\"}"
+                  headers: {}
+                  method: POST
+                  path: /reports
+            schema:
+              $ref: '#/components/schemas/DataManagementMakePassthroughRequestRequest'
+      responses:
+        "200":
+          description: ""
+      summary: Passthrough
+      tags:
+      - Data Management
+      x-konfig-operation-can-have-single-parameter: true
+      x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-post--passthrough
+      x-content-type: application/json
+      x-accepts: application/json
+  /drivers:
+    get:
+      description: List all of the drivers in the connected account
+      operationId: Drivers_list
+      parameters:
+      - description: Pagination cursor to start requests from
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          example: "{{nextCursor}}"
+          type: string
+          x-konfig-original-example: "{{nextCursor}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--drivers-get-parameters-0-schema
+        style: form
+      - description: The maximum number of results to return in a page.
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          example: "1"
+          type: string
+          x-konfig-original-example: "1"
+          x-konfig-generated-schema: konfig-generated-schema-paths--drivers-get-parameters-1-schema
+        style: form
+      - description: Only include records that were last modified after a provided
+          date.
+        explode: true
+        in: query
+        name: modifiedAfter
+        required: false
+        schema:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--drivers-get-parameters-2-schema
+        style: form
+      - description: Only include records that were last modified before a provided
+          date.
+        explode: true
+        in: query
+        name: modifiedBefore
+        required: false
+        schema:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--drivers-get-parameters-3-schema
+        style: form
+      - description: Include raw responses used to normalize model. Used for debugging
+          or accessing unique properties that are not unified.
+        explode: true
+        in: query
+        name: raw
+        required: false
+        schema:
+          example: "true"
+          type: string
+          x-konfig-original-example: "true"
+          x-konfig-generated-schema: konfig-generated-schema-paths--drivers-get-parameters-4-schema
+        style: form
+      - description: Expand resources in the returned response
+        explode: true
+        in: query
+        name: expand
+        required: false
+        schema:
+          example: ""
+          type: string
+          x-konfig-original-example: ""
+          x-konfig-generated-schema: konfig-generated-schema-paths--drivers-get-parameters-5-schema
+        style: form
+      - description: (Required) The token returned when a user authenticated their
+          account. This authorizes access to a specific account.
+        explode: false
+        in: header
+        name: connection-token
+        required: false
+        schema:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--drivers-get-parameters-6-schema
+        style: simple
+      responses:
+        "200":
+          description: ""
+      summary: List Drivers
+      tags:
+      - Drivers
+      x-konfig-operation-can-have-single-parameter: true
+      x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-get--drivers
+      x-accepts: application/json
+  /drivers/{id}:
+    get:
+      description: Get the details of a specific driver
+      operationId: Drivers_getDetails
+      parameters:
+      - description: '(Required) '
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          example: "{{driverId}}"
+          type: string
+          x-konfig-original-example: "{{driverId}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--drivers-id-parameters-0-schema
+        style: simple
+      - description: Include raw responses used to normalize model. Used for debugging
+          or accessing unique properties that are not unified.
+        explode: true
+        in: query
+        name: raw
+        required: false
+        schema:
+          example: "true"
+          type: string
+          x-konfig-original-example: "true"
+          x-konfig-generated-schema: konfig-generated-schema-paths--drivers-id-get-parameters-0-schema
+        style: form
+      - description: Expand resources in the returned response
+        explode: true
+        in: query
+        name: expand
+        required: false
+        schema:
+          example: ""
+          type: string
+          x-konfig-original-example: ""
+          x-konfig-generated-schema: konfig-generated-schema-paths--drivers-id-get-parameters-1-schema
+        style: form
+      - description: (Required) The token returned when a user authenticated their
+          account. This authorizes access to a specific account.
+        explode: false
+        in: header
+        name: connection-token
+        required: false
+        schema:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--drivers-id-get-parameters-2-schema
+        style: simple
+      responses:
+        "200":
+          description: ""
+      summary: Get Driver
+      tags:
+      - Drivers
+      x-konfig-operation-can-have-single-parameter: true
+      x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-get--drivers-id
+      x-accepts: application/json
+  /groups:
+    get:
+      description: List Groups
+      operationId: Groups_getAllGroups
+      parameters:
+      - description: The maximum number of results to return in a page.
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          example: "1"
+          type: string
+          x-konfig-original-example: "1"
+          x-konfig-generated-schema: konfig-generated-schema-paths--groups-get-parameters-0-schema
+        style: form
+      - description: Pagination cursor to start requests from
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          example: "{{nextCursor}}"
+          type: string
+          x-konfig-original-example: "{{nextCursor}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--groups-get-parameters-1-schema
+        style: form
+      - description: Expand resources in the returned response
+        explode: true
+        in: query
+        name: expand
+        required: false
+        schema:
+          example: ""
+          type: string
+          x-konfig-original-example: ""
+          x-konfig-generated-schema: konfig-generated-schema-paths--groups-get-parameters-2-schema
+        style: form
+      - description: Include raw responses used to normalize model. Used for debugging
+          or accessing unique properties that are not unified.
+        explode: true
+        in: query
+        name: raw
+        required: false
+        schema:
+          example: "true"
+          type: string
+          x-konfig-original-example: "true"
+          x-konfig-generated-schema: konfig-generated-schema-paths--groups-get-parameters-3-schema
+        style: form
+      - description: Only include records that were last modified after a provided
+          date.
+        explode: true
+        in: query
+        name: modifiedAfter
+        required: false
+        schema:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--groups-get-parameters-4-schema
+        style: form
+      - description: Only include records that were last modified before a provided
+          date.
+        explode: true
+        in: query
+        name: modifiedBefore
+        required: false
+        schema:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--groups-get-parameters-5-schema
+        style: form
+      - description: (Required) The token returned when a user authenticated their
+          account. This authorizes access to a specific account.
+        explode: false
+        in: header
+        name: connection-token
+        required: false
+        schema:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--groups-get-parameters-6-schema
+        style: simple
+      responses:
+        "200":
+          description: ""
+      summary: List Groups
+      tags:
+      - Groups
+      x-konfig-operation-can-have-single-parameter: true
+      x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-get--groups
+      x-accepts: application/json
+  /hos/available-time:
+    get:
+      description: "List available time for the driver. This endpoint provides live\
+        \ access to the driver's available time. Different than most endpoints, this\
+        \ endpoint calls the provider's API in real time to get the latest available\
+        \ time for the driver. This endpoint is useful for building real time applications\
+        \ that need to know the driver's available time."
+      operationId: HoursOfService_getAvailableTime
+      parameters:
+      - description: Pagination cursor to start requests from
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          example: "{{nextCursor}}"
+          type: string
+          x-konfig-original-example: "{{nextCursor}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-available-time-get-parameters-0-schema
+        style: form
+      - description: The maximum number of results to return in a page.
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          example: "1"
+          type: string
+          x-konfig-original-example: "1"
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-available-time-get-parameters-1-schema
+        style: form
+      - description: Comma separated list of driver IDs to filter for
+        explode: true
+        in: query
+        name: driverIds
+        required: false
+        schema:
+          example: "{{driverId}}"
+          type: string
+          x-konfig-original-example: "{{driverId}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-available-time-get-parameters-2-schema
+        style: form
+      - description: Expand resources in the returned response
+        explode: true
+        in: query
+        name: expand
+        required: false
+        schema:
+          example: ""
+          type: string
+          x-konfig-original-example: ""
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-available-time-get-parameters-3-schema
+        style: form
+      - description: Include raw responses used to normalize model. Used for debugging
+          or accessing unique properties that are not unified.
+        explode: true
+        in: query
+        name: raw
+        required: false
+        schema:
+          example: "true"
+          type: string
+          x-konfig-original-example: "true"
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-available-time-get-parameters-4-schema
+        style: form
+      - description: (Required) The token returned when a user authenticated their
+          account. This authorizes access to a specific account.
+        explode: false
+        in: header
+        name: connection-token
+        required: false
+        schema:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-available-time-get-parameters-5-schema
+        style: simple
+      responses:
+        "200":
+          description: ""
+      summary: Available Time for Drivers
+      tags:
+      - Hours of Service
+      x-konfig-operation-can-have-single-parameter: true
+      x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-get--hos-available-time
+      x-accepts: application/json
+  /hos/logs:
+    get:
+      description: "List all hours of service logs. Currently, HOS logs are tracked\
+        \ as the distinct changes in duty status. In the future we will be offering\
+        \ endpoints to expose current HOS status and historical daily summaries."
+      operationId: HoursOfService_listHosLogs
+      parameters:
+      - description: Pagination cursor to start requests from
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          example: "{{nextCursor}}"
+          type: string
+          x-konfig-original-example: "{{nextCursor}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-logs-get-parameters-0-schema
+        style: form
+      - description: The maximum number of results to return in a page.
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          example: "1"
+          type: string
+          x-konfig-original-example: "1"
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-logs-get-parameters-1-schema
+        style: form
+      - description: Only include records of statuses that started after a provided
+          date.
+        explode: true
+        in: query
+        name: startedAfter
+        required: false
+        schema:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-logs-get-parameters-2-schema
+        style: form
+      - description: Only include records of statuses that started before a provided
+          date.
+        explode: true
+        in: query
+        name: startedBefore
+        required: false
+        schema:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-logs-get-parameters-3-schema
+        style: form
+      - description: Only include records that were last modified after a provided
+          date.
+        explode: true
+        in: query
+        name: modifiedAfter
+        required: false
+        schema:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-logs-get-parameters-4-schema
+        style: form
+      - description: Only include records that were last modified before a provided
+          date.
+        explode: true
+        in: query
+        name: modifiedBefore
+        required: false
+        schema:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-logs-get-parameters-5-schema
+        style: form
+      - description: Comma separated list of driver IDs to filter for
+        explode: true
+        in: query
+        name: driverIds
+        required: false
+        schema:
+          example: "{{driverId}}"
+          type: string
+          x-konfig-original-example: "{{driverId}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-logs-get-parameters-6-schema
+        style: form
+      - description: Expand resources in the returned response
+        explode: true
+        in: query
+        name: expand
+        required: false
+        schema:
+          example: ""
+          type: string
+          x-konfig-original-example: ""
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-logs-get-parameters-7-schema
+        style: form
+      - description: Include raw responses used to normalize model. Used for debugging
+          or accessing unique properties that are not unified.
+        explode: true
+        in: query
+        name: raw
+        required: false
+        schema:
+          example: "true"
+          type: string
+          x-konfig-original-example: "true"
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-logs-get-parameters-8-schema
+        style: form
+      - description: (Required) The token returned when a user authenticated their
+          account. This authorizes access to a specific account.
+        explode: false
+        in: header
+        name: connection-token
+        required: false
+        schema:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-logs-get-parameters-9-schema
+        style: simple
+      responses:
+        "200":
+          description: ""
+      summary: List HOS Logs
+      tags:
+      - Hours of Service
+      x-konfig-operation-can-have-single-parameter: true
+      x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-get--hos-logs
+      x-accepts: application/json
+  /hos/daily-logs:
+    get:
+      description: List daily summary of hours of service. Each daily log represents
+        the time a driver spent in each duty status for a given day.
+      operationId: HoursOfService_getDailyLogs
+      parameters:
+      - description: Pagination cursor to start requests from
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          example: "{{nextCursor}}"
+          type: string
+          x-konfig-original-example: "{{nextCursor}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-daily-logs-get-parameters-0-schema
+        style: form
+      - description: The maximum number of results to return in a page.
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          example: "1"
+          type: string
+          x-konfig-original-example: "1"
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-daily-logs-get-parameters-1-schema
+        style: form
+      - description: Only include daily logs from on or after a specific date
+        explode: true
+        in: query
+        name: startDate
+        required: false
+        schema:
+          example: 1995-04-25
+          type: string
+          x-konfig-original-example: 1995-04-25
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-daily-logs-get-parameters-2-schema
+        style: form
+      - description: Only include daily logs from on or before a specific date
+        explode: true
+        in: query
+        name: endDate
+        required: false
+        schema:
+          example: 1995-04-25
+          type: string
+          x-konfig-original-example: 1995-04-25
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-daily-logs-get-parameters-3-schema
+        style: form
+      - description: Only include records that were last modified after a provided
+          date.
+        explode: true
+        in: query
+        name: modifiedAfter
+        required: false
+        schema:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-daily-logs-get-parameters-4-schema
+        style: form
+      - description: Only include records that were last modified before a provided
+          date.
+        explode: true
+        in: query
+        name: modifiedBefore
+        required: false
+        schema:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-daily-logs-get-parameters-5-schema
+        style: form
+      - description: Comma separated list of driver IDs to filter for
+        explode: true
+        in: query
+        name: driverIds
+        required: false
+        schema:
+          example: "{{driverId}}"
+          type: string
+          x-konfig-original-example: "{{driverId}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-daily-logs-get-parameters-6-schema
+        style: form
+      - description: Include raw responses used to normalize model. Used for debugging
+          or accessing unique properties that are not unified.
+        explode: true
+        in: query
+        name: raw
+        required: false
+        schema:
+          example: "true"
+          type: string
+          x-konfig-original-example: "true"
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-daily-logs-get-parameters-7-schema
+        style: form
+      - description: Expand resources in the returned response
+        explode: true
+        in: query
+        name: expand
+        required: false
+        schema:
+          example: ""
+          type: string
+          x-konfig-original-example: ""
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-daily-logs-get-parameters-8-schema
+        style: form
+      - description: (Required) The token returned when a user authenticated their
+          account. This authorizes access to a specific account.
+        explode: false
+        in: header
+        name: connection-token
+        required: false
+        schema:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-daily-logs-get-parameters-9-schema
+        style: simple
+      responses:
+        "200":
+          description: ""
+      summary: List HOS Daily Logs
+      tags:
+      - Hours of Service
+      x-konfig-operation-can-have-single-parameter: true
+      x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-get--hos-daily-logs
+      x-accepts: application/json
+  /ifta/summary:
+    get:
+      description: "Get all vehicle IFTA reports for the requested time span.\n\n\
+        Currently can only increment by full months. \n\n_Note:_ data may change for\
+        \ a few days after the month. We will continue to update those reports to\
+        \ ensure you get accurate results."
+      operationId: Ifta_getMonthlyReports
+      parameters:
+      - description: Pagination cursor to start requests from
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          example: "{{nextCursor}}"
+          type: string
+          x-konfig-original-example: "{{nextCursor}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--ifta-summary-get-parameters-0-schema
+        style: form
+      - description: Expand resources in the returned response
+        explode: true
+        in: query
+        name: expand
+        required: false
+        schema:
+          example: ""
+          type: string
+          x-konfig-original-example: ""
+          x-konfig-generated-schema: konfig-generated-schema-paths--ifta-summary-get-parameters-1-schema
+        style: form
+      - description: Include raw responses used to normalize model. Used for debugging
+          or accessing unique properties that are not unified.
+        explode: true
+        in: query
+        name: raw
+        required: false
+        schema:
+          example: "true"
+          type: string
+          x-konfig-original-example: "true"
+          x-konfig-generated-schema: konfig-generated-schema-paths--ifta-summary-get-parameters-2-schema
+        style: form
+      - description: (Required) The month from which to start including vehicle reports
+        explode: true
+        in: query
+        name: startMonth
+        required: false
+        schema:
+          example: 2021-01
+          type: string
+          x-konfig-original-example: 2021-01
+          x-konfig-generated-schema: konfig-generated-schema-paths--ifta-summary-get-parameters-3-schema
+        style: form
+      - description: (Required) Include vehicle reports up to and including this month
+        explode: true
+        in: query
+        name: endMonth
+        required: false
+        schema:
+          example: 2021-01
+          type: string
+          x-konfig-original-example: 2021-01
+          x-konfig-generated-schema: konfig-generated-schema-paths--ifta-summary-get-parameters-4-schema
+        style: form
+      - description: "Computes the total distance traversed within a specified month\
+          \ range, with the results grouped by either jurisdiction, vehicle, or both.\
+          \ If no grouping parameter is provided, the default grouping is `vehicle,jurisdiction`."
+        explode: true
+        in: query
+        name: groupBy
+        required: false
+        schema:
+          example: "vehicle,jurisdiction"
+          type: string
+          x-konfig-original-example: "vehicle,jurisdiction"
+          x-konfig-generated-schema: konfig-generated-schema-paths--ifta-summary-get-parameters-5-schema
+        style: form
+      - description: (Required) The token returned when a user authenticated their
+          account. This authorizes access to a specific account.
+        explode: false
+        in: header
+        name: connection-token
+        required: false
+        schema:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--ifta-summary-get-parameters-6-schema
+        style: simple
+      responses:
+        "200":
+          description: ""
+      summary: Get IFTA Summary
+      tags:
+      - IFTA
+      x-konfig-operation-can-have-single-parameter: true
+      x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-get--ifta-summary
+      x-accepts: application/json
+  /issues:
+    get:
+      description: |-
+        List all issues that have been observed by Terminal.
+        Issues are generated when we observe something that may impact the completeness or accuracy of the data we provide but do not justify a full error.
+        For example, if we lack permissions for a specific resource or need to skip an item due to invalid data.
+      operationId: Issues_listObservedEvents
+      parameters:
+      - description: The maximum number of results to return in a page.
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          example: "1"
+          type: string
+          x-konfig-original-example: "1"
+          x-konfig-generated-schema: konfig-generated-schema-paths--issues-get-parameters-0-schema
+        style: form
+      - description: Pagination cursor to start requests from
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          example: "{{nextCursor}}"
+          type: string
+          x-konfig-original-example: "{{nextCursor}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--issues-get-parameters-1-schema
+        style: form
+      - description: Timestamp to start when the issue was last observed
+        explode: true
+        in: query
+        name: lastReportedAfter
+        required: false
+        schema:
+          example: 2023-06-07
+          type: string
+          x-konfig-original-example: 2023-06-07
+          x-konfig-generated-schema: konfig-generated-schema-paths--issues-get-parameters-2-schema
+        style: form
+      - description: Timestamp to end when the issue was last observed
+        explode: true
+        in: query
+        name: lastReportedBefore
+        required: false
+        schema:
+          example: 2023-06-07
+          type: string
+          x-konfig-original-example: 2023-06-07
+          x-konfig-generated-schema: konfig-generated-schema-paths--issues-get-parameters-3-schema
+        style: form
+      - description: Expand related resources to see all details
+        explode: true
+        in: query
+        name: expand
+        required: false
+        schema:
+          example: ""
+          type: string
+          x-konfig-original-example: ""
+          x-konfig-generated-schema: konfig-generated-schema-paths--issues-get-parameters-4-schema
+        style: form
+      - description: Filter issues to a specific connection
+        explode: true
+        in: query
+        name: connectionId
+        required: false
+        schema:
+          example: conn_01GV12VR4DJP70GD1ZBK0SDWFH
+          type: string
+          x-konfig-original-example: conn_01GV12VR4DJP70GD1ZBK0SDWFH
+          x-konfig-generated-schema: konfig-generated-schema-paths--issues-get-parameters-5-schema
+        style: form
+      - description: Filter issues to a specific error code
+        explode: true
+        in: query
+        name: errorCode
+        required: false
+        schema:
+          example: invalid_source_id
+          type: string
+          x-konfig-original-example: invalid_source_id
+          x-konfig-generated-schema: konfig-generated-schema-paths--issues-get-parameters-6-schema
+        style: form
+      - description: Filter issues to a specific status
+        explode: true
+        in: query
+        name: status
+        required: false
+        schema:
+          example: ongoing
+          type: string
+          x-konfig-original-example: ongoing
+          x-konfig-generated-schema: konfig-generated-schema-paths--issues-get-parameters-7-schema
+        style: form
+      responses:
+        "200":
+          description: ""
+      summary: List Issues
+      tags:
+      - Issues
+      x-konfig-operation-can-have-single-parameter: true
+      x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-get--issues
+      x-accepts: application/json
+  /issues/{issueId}/resolve:
+    post:
+      description: Mark an issue's status as `resolved` until the issue is observed
+        again.
+      operationId: Issues_markResolved
+      parameters:
+      - description: '(Required) '
+        explode: false
+        in: path
+        name: issueId
+        required: true
+        schema:
+          example: tempor in aliqua
+          type: string
+          x-konfig-original-example: tempor in aliqua
+          x-konfig-generated-schema: konfig-generated-schema-paths--issues-issueId-resolve-parameters-0-schema
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            examples:
+              Resolve Issue:
+                value: {}
+            schema:
+              $ref: '#/components/schemas/IssuesMarkResolvedRequest'
+      responses:
+        "200":
+          description: ""
+      summary: Resolve Issue
+      tags:
+      - Issues
+      x-konfig-operation-can-have-single-parameter: true
+      x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-post--issues-issueId-resolve
+      x-content-type: application/json
+      x-accepts: application/json
+  /providers:
+    get:
+      description: Retrieve a list of the providers Terminal supports. This endpoint
+        will grow to include additional details about the supported capabilities of
+        each provider.
+      operationId: Providers_getList
+      responses:
+        "200":
+          description: ""
+      summary: List Providers
+      tags:
+      - Providers
+      x-konfig-operation-can-have-single-parameter: true
+      x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-get--providers
+      x-accepts: application/json
+  /safety/events:
+    get:
+      description: List all safety events detected by the provider.
+      operationId: Safety_getEvents
+      parameters:
+      - description: Pagination cursor to start requests from
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          example: "{{nextCursor}}"
+          type: string
+          x-konfig-original-example: "{{nextCursor}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--safety-events-get-parameters-0-schema
+        style: form
+      - description: The maximum number of results to return in a page.
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          example: "1"
+          type: string
+          x-konfig-original-example: "1"
+          x-konfig-generated-schema: konfig-generated-schema-paths--safety-events-get-parameters-1-schema
+        style: form
+      - description: Only include records that were last modified after a provided
+          date.
+        explode: true
+        in: query
+        name: modifiedAfter
+        required: false
+        schema:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--safety-events-get-parameters-2-schema
+        style: form
+      - description: Only include records that were last modified before a provided
+          date.
+        explode: true
+        in: query
+        name: modifiedBefore
+        required: false
+        schema:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--safety-events-get-parameters-3-schema
+        style: form
+      - description: Only include records of statuses that started after a provided
+          date.
+        explode: true
+        in: query
+        name: startedAfter
+        required: false
+        schema:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--safety-events-get-parameters-4-schema
+        style: form
+      - description: Only include records of statuses that started before a provided
+          date.
+        explode: true
+        in: query
+        name: startedBefore
+        required: false
+        schema:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--safety-events-get-parameters-5-schema
+        style: form
+      - description: Comma separated list of driver IDs to filter for
+        explode: true
+        in: query
+        name: driverIds
+        required: false
+        schema:
+          example: "{{driverId}}"
+          type: string
+          x-konfig-original-example: "{{driverId}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--safety-events-get-parameters-6-schema
+        style: form
+      - description: Comma separated list of vehicle IDs to filter for
+        explode: true
+        in: query
+        name: vehicleIds
+        required: false
+        schema:
+          example: "{{vehicleId}}"
+          type: string
+          x-konfig-original-example: "{{vehicleId}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--safety-events-get-parameters-7-schema
+        style: form
+      - description: Expand resources in the returned response
+        explode: true
+        in: query
+        name: expand
+        required: false
+        schema:
+          example: ""
+          type: string
+          x-konfig-original-example: ""
+          x-konfig-generated-schema: konfig-generated-schema-paths--safety-events-get-parameters-8-schema
+        style: form
+      - description: Include raw responses used to normalize model. Used for debugging
+          or accessing unique properties that are not unified.
+        explode: true
+        in: query
+        name: raw
+        required: false
+        schema:
+          example: "true"
+          type: string
+          x-konfig-original-example: "true"
+          x-konfig-generated-schema: konfig-generated-schema-paths--safety-events-get-parameters-9-schema
+        style: form
+      - description: (Required) The token returned when a user authenticated their
+          account. This authorizes access to a specific account.
+        explode: false
+        in: header
+        name: connection-token
+        required: false
+        schema:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--safety-events-get-parameters-10-schema
+        style: simple
+      responses:
+        "200":
+          description: ""
+      summary: List Safety Events
+      tags:
+      - Safety
+      x-konfig-operation-can-have-single-parameter: true
+      x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-get--safety-events
+      x-accepts: application/json
+  /trailers:
+    get:
+      description: List Trailers
+      operationId: Trailers_getAllTrailers
+      parameters:
+      - description: The maximum number of results to return in a page.
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          example: "1"
+          type: string
+          x-konfig-original-example: "1"
+          x-konfig-generated-schema: konfig-generated-schema-paths--trailers-get-parameters-0-schema
+        style: form
+      - description: Pagination cursor to start requests from
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          example: "{{nextCursor}}"
+          type: string
+          x-konfig-original-example: "{{nextCursor}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--trailers-get-parameters-1-schema
+        style: form
+      - description: Expand resources in the returned response
+        explode: true
+        in: query
+        name: expand
+        required: false
+        schema:
+          example: ""
+          type: string
+          x-konfig-original-example: ""
+          x-konfig-generated-schema: konfig-generated-schema-paths--trailers-get-parameters-2-schema
+        style: form
+      - description: Include raw responses used to normalize model. Used for debugging
+          or accessing unique properties that are not unified.
+        explode: true
+        in: query
+        name: raw
+        required: false
+        schema:
+          example: "true"
+          type: string
+          x-konfig-original-example: "true"
+          x-konfig-generated-schema: konfig-generated-schema-paths--trailers-get-parameters-3-schema
+        style: form
+      - description: Only include records that were last modified after a provided
+          date.
+        explode: true
+        in: query
+        name: modifiedAfter
+        required: false
+        schema:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--trailers-get-parameters-4-schema
+        style: form
+      - description: Only include records that were last modified before a provided
+          date.
+        explode: true
+        in: query
+        name: modifiedBefore
+        required: false
+        schema:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--trailers-get-parameters-5-schema
+        style: form
+      - description: (Required) The token returned when a user authenticated their
+          account. This authorizes access to a specific account.
+        explode: false
+        in: header
+        name: connection-token
+        required: false
+        schema:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--trailers-get-parameters-6-schema
+        style: simple
+      responses:
+        "200":
+          description: ""
+      summary: List Trailers
+      tags:
+      - Trailers
+      x-konfig-operation-can-have-single-parameter: true
+      x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-get--trailers
+      x-accepts: application/json
+  /trailers/locations:
+    get:
+      description: Latest Trailer Locations
+      operationId: Trailers_listLatestLocations
+      parameters:
+      - description: The maximum number of results to return in a page.
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          example: "1"
+          type: string
+          x-konfig-original-example: "1"
+          x-konfig-generated-schema: konfig-generated-schema-paths--trailers-locations-get-parameters-0-schema
+        style: form
+      - description: Pagination cursor to start requests from
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          example: "{{nextCursor}}"
+          type: string
+          x-konfig-original-example: "{{nextCursor}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--trailers-locations-get-parameters-1-schema
+        style: form
+      - description: Expand resources in the returned response
+        explode: true
+        in: query
+        name: expand
+        required: false
+        schema:
+          example: ""
+          type: string
+          x-konfig-original-example: ""
+          x-konfig-generated-schema: konfig-generated-schema-paths--trailers-locations-get-parameters-2-schema
+        style: form
+      - description: Include raw responses used to normalize model. Used for debugging
+          or accessing unique properties that are not unified.
+        explode: true
+        in: query
+        name: raw
+        required: false
+        schema:
+          example: "true"
+          type: string
+          x-konfig-original-example: "true"
+          x-konfig-generated-schema: konfig-generated-schema-paths--trailers-locations-get-parameters-3-schema
+        style: form
+      - description: (Required) The token returned when a user authenticated their
+          account. This authorizes access to a specific account.
+        explode: false
+        in: header
+        name: connection-token
+        required: false
+        schema:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--trailers-locations-get-parameters-4-schema
+        style: simple
+      responses:
+        "200":
+          description: ""
+      summary: Latest Trailer Locations
+      tags:
+      - Trailers
+      x-konfig-operation-can-have-single-parameter: true
+      x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-get--trailers-locations
+      x-accepts: application/json
+  /vehicles:
+    get:
+      description: List all of the vehicles in the connected account
+      operationId: Vehicles_getAll
+      parameters:
+      - description: Pagination cursor to start requests from
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          example: "{{nextCursor}}"
+          type: string
+          x-konfig-original-example: "{{nextCursor}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-get-parameters-0-schema
+        style: form
+      - description: The maximum number of results to return in a page.
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          example: "1"
+          type: string
+          x-konfig-original-example: "1"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-get-parameters-1-schema
+        style: form
+      - description: Only include records that were last modified after a provided
+          date.
+        explode: true
+        in: query
+        name: modifiedAfter
+        required: false
+        schema:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-get-parameters-2-schema
+        style: form
+      - description: Only include records that were last modified before a provided
+          date.
+        explode: true
+        in: query
+        name: modifiedBefore
+        required: false
+        schema:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-get-parameters-3-schema
+        style: form
+      - description: Include raw responses used to normalize model. Used for debugging
+          or accessing unique properties that are not unified.
+        explode: true
+        in: query
+        name: raw
+        required: false
+        schema:
+          example: "true"
+          type: string
+          x-konfig-original-example: "true"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-get-parameters-4-schema
+        style: form
+      - description: Expand resources in the returned response
+        explode: true
+        in: query
+        name: expand
+        required: false
+        schema:
+          example: ""
+          type: string
+          x-konfig-original-example: ""
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-get-parameters-5-schema
+        style: form
+      - description: (Required) The token returned when a user authenticated their
+          account. This authorizes access to a specific account.
+        explode: false
+        in: header
+        name: connection-token
+        required: false
+        schema:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-get-parameters-6-schema
+        style: simple
+      responses:
+        "200":
+          description: ""
+      summary: List Vehicles
+      tags:
+      - Vehicles
+      x-konfig-operation-can-have-single-parameter: true
+      x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-get--vehicles
+      x-accepts: application/json
+  /vehicles/{id}:
+    get:
+      description: Get the details of a specific vehicle
+      operationId: Vehicles_getDetails
+      parameters:
+      - description: '(Required) '
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          example: "{{vehicleId}}"
+          type: string
+          x-konfig-original-example: "{{vehicleId}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-id-parameters-0-schema
+        style: simple
+      - description: Include raw responses used to normalize model. Used for debugging
+          or accessing unique properties that are not unified.
+        explode: true
+        in: query
+        name: raw
+        required: false
+        schema:
+          example: "true"
+          type: string
+          x-konfig-original-example: "true"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-id-get-parameters-0-schema
+        style: form
+      - description: Expand resources in the returned response
+        explode: true
+        in: query
+        name: expand
+        required: false
+        schema:
+          example: ""
+          type: string
+          x-konfig-original-example: ""
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-id-get-parameters-1-schema
+        style: form
+      - description: (Required) The token returned when a user authenticated their
+          account. This authorizes access to a specific account.
+        explode: false
+        in: header
+        name: connection-token
+        required: false
+        schema:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-id-get-parameters-2-schema
+        style: simple
+      responses:
+        "200":
+          description: ""
+      summary: Get Vehicle
+      tags:
+      - Vehicles
+      x-konfig-operation-can-have-single-parameter: true
+      x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-get--vehicles-id
+      x-accepts: application/json
+  /vehicles/locations:
+    get:
+      description: "List the latest location of the vehicles in the connected account.\n\
+        This endpoint will call the provider's API in real time to get the latest\
+        \ location of the vehicle. \n_Please note: this endpoint will exclude vehicles\
+        \ that have no last known location._"
+      operationId: Vehicles_getLatestLocations
+      parameters:
+      - description: Pagination cursor to start requests from
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          example: "{{nextCursor}}"
+          type: string
+          x-konfig-original-example: "{{nextCursor}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-locations-get-parameters-0-schema
+        style: form
+      - description: The maximum number of results to return in a page.
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          example: "1"
+          type: string
+          x-konfig-original-example: "1"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-locations-get-parameters-1-schema
+        style: form
+      - description: Include raw responses used to normalize model. Used for debugging
+          or accessing unique properties that are not unified.
+        explode: true
+        in: query
+        name: raw
+        required: false
+        schema:
+          example: "true"
+          type: string
+          x-konfig-original-example: "true"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-locations-get-parameters-2-schema
+        style: form
+      - description: Comma separated list of vehicle IDs to filter for
+        explode: true
+        in: query
+        name: vehicleIds
+        required: false
+        schema:
+          example: "{{vehicleId}}"
+          type: string
+          x-konfig-original-example: "{{vehicleId}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-locations-get-parameters-3-schema
+        style: form
+      - description: Expand resources in the returned response
+        explode: true
+        in: query
+        name: expand
+        required: false
+        schema:
+          example: ""
+          type: string
+          x-konfig-original-example: ""
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-locations-get-parameters-4-schema
+        style: form
+      - description: (Required) The token returned when a user authenticated their
+          account. This authorizes access to a specific account.
+        explode: false
+        in: header
+        name: connection-token
+        required: false
+        schema:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-locations-get-parameters-5-schema
+        style: simple
+      responses:
+        "200":
+          description: ""
+      summary: Latest Vehicle Locations
+      tags:
+      - Vehicles
+      x-konfig-operation-can-have-single-parameter: true
+      x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-get--vehicles-locations
+      x-accepts: application/json
+  /vehicles/{vehicleId}/locations:
+    get:
+      description: |-
+        List the historical breadcrumb locations for a vehicle.
+
+        _Note:_
+
+        Given the large volume of location data available, we encourage customers to accept compressed (`gzip`) responses in order to maximize throughput. This is supported with many popular HTTP clients. Result limits vary depending on if results are compressed or not.
+      operationId: Vehicles_listHistoricalLocations
+      parameters:
+      - description: (Required) Vehicle to retrieve breadcrumb locations for
+        explode: false
+        in: path
+        name: vehicleId
+        required: true
+        schema:
+          example: "{{vehicleId}}"
+          type: string
+          x-konfig-original-example: "{{vehicleId}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-vehicleId-locations-parameters-0-schema
+        style: simple
+      - description: Pagination cursor to start requests from
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          example: "{{nextCursor}}"
+          type: string
+          x-konfig-original-example: "{{nextCursor}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-vehicleId-locations-get-parameters-0-schema
+        style: form
+      - description: The maximum number of results to return in a page.
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          example: "1"
+          type: string
+          x-konfig-original-example: "1"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-vehicleId-locations-get-parameters-1-schema
+        style: form
+      - description: Timestamp to start from - defaults to `TODAY - 1 MONTH`
+        explode: true
+        in: query
+        name: startAt
+        required: false
+        schema:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-vehicleId-locations-get-parameters-2-schema
+        style: form
+      - description: Timestamp to end at - defaults to `TODAY`
+        explode: true
+        in: query
+        name: endAt
+        required: false
+        schema:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-vehicleId-locations-get-parameters-3-schema
+        style: form
+      - description: Include raw responses used to normalize model. Used for debugging
+          or accessing unique properties that are not unified.
+        explode: true
+        in: query
+        name: raw
+        required: false
+        schema:
+          example: "true"
+          type: string
+          x-konfig-original-example: "true"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-vehicleId-locations-get-parameters-4-schema
+        style: form
+      - description: (Required) The token returned when a user authenticated their
+          account. This authorizes access to a specific account.
+        explode: false
+        in: header
+        name: connection-token
+        required: false
+        schema:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-vehicleId-locations-get-parameters-5-schema
+        style: simple
+      responses:
+        "200":
+          description: ""
+      summary: Historical Vehicle Locations
+      tags:
+      - Vehicles
+      x-konfig-operation-can-have-single-parameter: true
+      x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-get--vehicles-vehicleId-locations
+      x-accepts: application/json
+  /vehicles/{vehicleId}/stats/historical:
+    get:
+      description: List historical stats and logs about the vehicle.
+      operationId: Vehicles_getHistoricalStats
+      parameters:
+      - description: '(Required) '
+        explode: false
+        in: path
+        name: vehicleId
+        required: true
+        schema:
+          example: "{{vehicleId}}"
+          type: string
+          x-konfig-original-example: "{{vehicleId}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-vehicleId-stats-historical-parameters-0-schema
+        style: simple
+      - description: Pagination cursor to start requests from
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          example: "{{nextCursor}}"
+          type: string
+          x-konfig-original-example: "{{nextCursor}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-vehicleId-stats-historical-get-parameters-0-schema
+        style: form
+      - description: The maximum number of results to return in a page.
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          example: "1"
+          type: string
+          x-konfig-original-example: "1"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-vehicleId-stats-historical-get-parameters-1-schema
+        style: form
+      - description: Expand resources in the returned response
+        explode: true
+        in: query
+        name: expand
+        required: false
+        schema:
+          example: ""
+          type: string
+          x-konfig-original-example: ""
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-vehicleId-stats-historical-get-parameters-2-schema
+        style: form
+      - description: Timestamp to start from - defaults to `TODAY - 1 MONTH`
+        explode: true
+        in: query
+        name: startAt
+        required: false
+        schema:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-vehicleId-stats-historical-get-parameters-3-schema
+        style: form
+      - description: Timestamp to end at - defaults to `TODAY`
+        explode: true
+        in: query
+        name: endAt
+        required: false
+        schema:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-vehicleId-stats-historical-get-parameters-4-schema
+        style: form
+      - description: Comma separated list of vehicle stats to filter for
+        explode: true
+        in: query
+        name: types
+        required: false
+        schema:
+          example: "odometer,engine_state,fuel_level,total_fuel_consumption"
+          type: string
+          x-konfig-original-example: "odometer,engine_state,fuel_level,total_fuel_consumption"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-vehicleId-stats-historical-get-parameters-5-schema
+        style: form
+      - description: Include raw responses used to normalize model. Used for debugging
+          or accessing unique properties that are not unified.
+        explode: true
+        in: query
+        name: raw
+        required: false
+        schema:
+          example: "true"
+          type: string
+          x-konfig-original-example: "true"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-vehicleId-stats-historical-get-parameters-6-schema
+        style: form
+      - description: (Required) The token returned when a user authenticated their
+          account. This authorizes access to a specific account.
+        explode: false
+        in: header
+        name: connection-token
+        required: false
+        schema:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-vehicleId-stats-historical-get-parameters-7-schema
+        style: simple
+      responses:
+        "200":
+          description: ""
+      summary: Historical Vehicle Stats
+      tags:
+      - Vehicles
+      x-konfig-operation-can-have-single-parameter: true
+      x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-get--vehicles-vehicleId-stats-historical
+      x-accepts: application/json
+  /trips:
+    get:
+      description: List all trips in the connected account. Trips define a period
+        of time where a vehicle is in motion.
+      operationId: Trips_getAllTrips
+      parameters:
+      - description: Pagination cursor to start requests from
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          example: "{{nextCursor}}"
+          type: string
+          x-konfig-original-example: "{{nextCursor}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--trips-get-parameters-0-schema
+        style: form
+      - description: The maximum number of results to return in a page.
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          example: "1"
+          type: string
+          x-konfig-original-example: "1"
+          x-konfig-generated-schema: konfig-generated-schema-paths--trips-get-parameters-1-schema
+        style: form
+      - description: Only include records that were last modified after a provided
+          date.
+        explode: true
+        in: query
+        name: modifiedAfter
+        required: false
+        schema:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--trips-get-parameters-2-schema
+        style: form
+      - description: Only include records that were last modified before a provided
+          date.
+        explode: true
+        in: query
+        name: modifiedBefore
+        required: false
+        schema:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--trips-get-parameters-3-schema
+        style: form
+      - description: Only include trips that started after a provided date.
+        explode: true
+        in: query
+        name: startedAfter
+        required: false
+        schema:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--trips-get-parameters-4-schema
+        style: form
+      - description: Only include trips that started before a provided date.
+        explode: true
+        in: query
+        name: startedBefore
+        required: false
+        schema:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--trips-get-parameters-5-schema
+        style: form
+      - description: Only include trips that ended after a provided date.
+        explode: true
+        in: query
+        name: endedAfter
+        required: false
+        schema:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--trips-get-parameters-6-schema
+        style: form
+      - description: Only include trips that ended before a provided date.
+        explode: true
+        in: query
+        name: endedBefore
+        required: false
+        schema:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--trips-get-parameters-7-schema
+        style: form
+      - description: Comma separated list of driver IDs to filter for
+        explode: true
+        in: query
+        name: driverIds
+        required: false
+        schema:
+          example: "{{driverId}}"
+          type: string
+          x-konfig-original-example: "{{driverId}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--trips-get-parameters-8-schema
+        style: form
+      - description: Comma separated list of vehicle IDs to filter for
+        explode: true
+        in: query
+        name: vehicleIds
+        required: false
+        schema:
+          example: "{{vehicleId}}"
+          type: string
+          x-konfig-original-example: "{{vehicleId}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--trips-get-parameters-9-schema
+        style: form
+      - description: Include raw responses used to normalize model. Used for debugging
+          or accessing unique properties that are not unified.
+        explode: true
+        in: query
+        name: raw
+        required: false
+        schema:
+          example: "true"
+          type: string
+          x-konfig-original-example: "true"
+          x-konfig-generated-schema: konfig-generated-schema-paths--trips-get-parameters-10-schema
+        style: form
+      - description: Expand resources in the returned response
+        explode: true
+        in: query
+        name: expand
+        required: false
+        schema:
+          example: ""
+          type: string
+          x-konfig-original-example: ""
+          x-konfig-generated-schema: konfig-generated-schema-paths--trips-get-parameters-11-schema
+        style: form
+      - description: (Required) The token returned when a user authenticated their
+          account. This authorizes access to a specific account.
+        explode: false
+        in: header
+        name: connection-token
+        required: false
+        schema:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--trips-get-parameters-12-schema
+        style: simple
+      responses:
+        "200":
+          description: ""
+      summary: List Trips
+      tags:
+      - Trips
+      x-konfig-operation-can-have-single-parameter: true
+      x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-get--trips
+      x-accepts: application/json
+components:
+  schemas:
+    AuthenticationExchangeTokenRequest:
+      example:
+        publicToken: INSERT_PUBLIC_TOKEN
+      properties:
+        publicToken:
+          example: INSERT_PUBLIC_TOKEN
+          type: string
+          x-konfig-original-example: INSERT_PUBLIC_TOKEN
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-AuthenticationExchangeTokenRequest-properties-publicToken
+      type: object
+    ConnectionsCreateCustomConnectionRequest:
+      example:
+        credentials:
+          database: amet ut laborum est
+          password: esse ut nostrud
+          username: nisi in culpa
+        provider: geotab
+        syncMode: automatic
+        backfill:
+          startFrom: 2021-01-06T03:24:53.000Z
+          days: 45896231.10260823
+        externalId: ullamco dolore ipsum
+        company:
+          name: minim nostrud
+          dotNumbers:
+          - tempor ea cupidatat incididunt proident
+          - cupidatat occaecat do enim
+        tags:
+        - Tag Name
+        - Tag Name
+      properties:
+        tags:
+          example:
+          - Tag Name
+          - Tag Name
+          items:
+            example: Tag Name
+            type: string
+            x-konfig-original-example: Tag Name
+            x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-tags-items
+          type: array
+          x-konfig-original-example:
+          - Tag Name
+          - Tag Name
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-tags
+        backfill:
+          $ref: '#/components/schemas/ConnectionsCreateCustomConnectionRequest_backfill'
+        company:
+          $ref: '#/components/schemas/ConnectionsCreateCustomConnectionRequest_company'
+        credentials:
+          $ref: '#/components/schemas/ConnectionsCreateCustomConnectionRequest_credentials'
+        externalId:
+          example: ullamco dolore ipsum
+          type: string
+          x-konfig-original-example: ullamco dolore ipsum
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-externalId
+        provider:
+          example: geotab
+          type: string
+          x-konfig-original-example: geotab
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-provider
+        syncMode:
+          example: automatic
+          type: string
+          x-konfig-original-example: automatic
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-syncMode
+      type: object
+    ConnectionsUpdateCurrentConnectionDetailsRequest:
+      example:
+        syncMode: automatic
+        externalId: ad sed dolore cupidatat
+        company:
+          name: Acme Inc.
+        tags:
+        - dolor in magna
+        - reprehenderit dolor nostrud
+        status: laborum sed consectetur
+      properties:
+        tags:
+          example:
+          - dolor in magna
+          - reprehenderit dolor nostrud
+          items:
+            example: dolor in magna
+            type: string
+            x-konfig-original-example: dolor in magna
+            x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsUpdateCurrentConnectionDetailsRequest-properties-tags-items
+          type: array
+          x-konfig-original-example:
+          - dolor in magna
+          - reprehenderit dolor nostrud
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsUpdateCurrentConnectionDetailsRequest-properties-tags
+        company:
+          $ref: '#/components/schemas/ConnectionsUpdateCurrentConnectionDetailsRequest_company'
+        externalId:
+          example: ad sed dolore cupidatat
+          type: string
+          x-konfig-original-example: ad sed dolore cupidatat
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsUpdateCurrentConnectionDetailsRequest-properties-externalId
+        status:
+          example: laborum sed consectetur
+          type: string
+          x-konfig-original-example: laborum sed consectetur
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsUpdateCurrentConnectionDetailsRequest-properties-status
+        syncMode:
+          example: automatic
+          type: string
+          x-konfig-original-example: automatic
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsUpdateCurrentConnectionDetailsRequest-properties-syncMode
+      type: object
+    DataManagementRequestSyncManualRequest:
+      example:
+        days: 7
+      properties:
+        days:
+          example: 7
+          type: number
+          x-konfig-original-example: 7
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-DataManagementRequestSyncManualRequest-properties-days
+      type: object
+    DataManagementMakePassthroughRequestRequest:
+      example:
+        headers: "{}"
+        path: /reports
+        method: POST
+        body: "{\"reportId\":\"1234\"}"
+      properties:
+        body:
+          example: "{\"reportId\":\"1234\"}"
+          type: string
+          x-konfig-original-example: "{\"reportId\":\"1234\"}"
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-DataManagementMakePassthroughRequestRequest-properties-body
+        headers:
+          properties: {}
+          type: object
+        method:
+          example: POST
+          type: string
+          x-konfig-original-example: POST
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-DataManagementMakePassthroughRequestRequest-properties-method
+        path:
+          example: /reports
+          type: string
+          x-konfig-original-example: /reports
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-DataManagementMakePassthroughRequestRequest-properties-path
+      type: object
+    IssuesMarkResolvedRequest:
+      example: {}
+      properties: {}
+      type: object
+      x-konfig-original-example: {}
+      x-konfig-generated-schema: konfig-generated-schema-components-schemas-IssuesMarkResolvedRequest
+    konfig-generated-schema-paths--connections-get-parameters-0-schema:
+      example: "{{nextCursor}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--connections-get-parameters-1-schema:
+      example: "1"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--connections-get-parameters-2-schema:
+      example: "123"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--connections-get-parameters-3-schema:
+      example: "123"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--connections-get-parameters-4-schema:
+      example: tempor in aliqua
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--connections-current-get-parameters-0-schema:
+      example: "{{connectionToken}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--connections-current-patch-parameters-0-schema:
+      example: "{{connectionToken}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--syncs-get-parameters-0-schema:
+      example: "1"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--syncs-get-parameters-1-schema:
+      example: "{{nextCursor}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--syncs-get-parameters-2-schema:
+      example: in_progress
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--syncs-get-parameters-3-schema:
+      example: ""
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--syncs-get-parameters-4-schema:
+      example: "{{connectionToken}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--syncs-post-parameters-0-schema:
+      example: "{{connectionToken}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--syncs-id-parameters-0-schema:
+      example: "{{syncId}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--syncs-id-get-parameters-0-schema:
+      example: ""
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--syncs-id-get-parameters-1-schema:
+      example: "{{connectionToken}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--passthrough-post-parameters-0-schema:
+      example: "{{connectionToken}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--drivers-get-parameters-0-schema:
+      example: "{{nextCursor}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--drivers-get-parameters-1-schema:
+      example: "1"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--drivers-get-parameters-2-schema:
+      example: 2021-01-06T03:24:53.000Z
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--drivers-get-parameters-3-schema:
+      example: 2021-01-06T03:24:53.000Z
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--drivers-get-parameters-4-schema:
+      example: "true"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--drivers-get-parameters-5-schema:
+      example: ""
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--drivers-get-parameters-6-schema:
+      example: "{{connectionToken}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--drivers-id-parameters-0-schema:
+      example: "{{driverId}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--drivers-id-get-parameters-0-schema:
+      example: "true"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--drivers-id-get-parameters-1-schema:
+      example: ""
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--drivers-id-get-parameters-2-schema:
+      example: "{{connectionToken}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--groups-get-parameters-0-schema:
+      example: "1"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--groups-get-parameters-1-schema:
+      example: "{{nextCursor}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--groups-get-parameters-2-schema:
+      example: ""
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--groups-get-parameters-3-schema:
+      example: "true"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--groups-get-parameters-4-schema:
+      example: 2021-01-06T03:24:53.000Z
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--groups-get-parameters-5-schema:
+      example: 2021-01-06T03:24:53.000Z
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--groups-get-parameters-6-schema:
+      example: "{{connectionToken}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--hos-available-time-get-parameters-0-schema:
+      example: "{{nextCursor}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--hos-available-time-get-parameters-1-schema:
+      example: "1"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--hos-available-time-get-parameters-2-schema:
+      example: "{{driverId}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--hos-available-time-get-parameters-3-schema:
+      example: ""
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--hos-available-time-get-parameters-4-schema:
+      example: "true"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--hos-available-time-get-parameters-5-schema:
+      example: "{{connectionToken}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--hos-logs-get-parameters-0-schema:
+      example: "{{nextCursor}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--hos-logs-get-parameters-1-schema:
+      example: "1"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--hos-logs-get-parameters-2-schema:
+      example: 2021-01-06T03:24:53.000Z
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--hos-logs-get-parameters-3-schema:
+      example: 2021-01-06T03:24:53.000Z
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--hos-logs-get-parameters-4-schema:
+      example: 2021-01-06T03:24:53.000Z
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--hos-logs-get-parameters-5-schema:
+      example: 2021-01-06T03:24:53.000Z
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--hos-logs-get-parameters-6-schema:
+      example: "{{driverId}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--hos-logs-get-parameters-7-schema:
+      example: ""
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--hos-logs-get-parameters-8-schema:
+      example: "true"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--hos-logs-get-parameters-9-schema:
+      example: "{{connectionToken}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--hos-daily-logs-get-parameters-0-schema:
+      example: "{{nextCursor}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--hos-daily-logs-get-parameters-1-schema:
+      example: "1"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--hos-daily-logs-get-parameters-2-schema:
+      example: 1995-04-25
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--hos-daily-logs-get-parameters-3-schema:
+      example: 1995-04-25
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--hos-daily-logs-get-parameters-4-schema:
+      example: 2021-01-06T03:24:53.000Z
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--hos-daily-logs-get-parameters-5-schema:
+      example: 2021-01-06T03:24:53.000Z
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--hos-daily-logs-get-parameters-6-schema:
+      example: "{{driverId}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--hos-daily-logs-get-parameters-7-schema:
+      example: "true"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--hos-daily-logs-get-parameters-8-schema:
+      example: ""
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--hos-daily-logs-get-parameters-9-schema:
+      example: "{{connectionToken}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--ifta-summary-get-parameters-0-schema:
+      example: "{{nextCursor}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--ifta-summary-get-parameters-1-schema:
+      example: ""
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--ifta-summary-get-parameters-2-schema:
+      example: "true"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--ifta-summary-get-parameters-3-schema:
+      example: 2021-01
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--ifta-summary-get-parameters-4-schema:
+      example: 2021-01
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--ifta-summary-get-parameters-5-schema:
+      example: "vehicle,jurisdiction"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--ifta-summary-get-parameters-6-schema:
+      example: "{{connectionToken}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--issues-get-parameters-0-schema:
+      example: "1"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--issues-get-parameters-1-schema:
+      example: "{{nextCursor}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--issues-get-parameters-2-schema:
+      example: 2023-06-07
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--issues-get-parameters-3-schema:
+      example: 2023-06-07
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--issues-get-parameters-4-schema:
+      example: ""
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--issues-get-parameters-5-schema:
+      example: conn_01GV12VR4DJP70GD1ZBK0SDWFH
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--issues-get-parameters-6-schema:
+      example: invalid_source_id
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--issues-get-parameters-7-schema:
+      example: ongoing
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--issues-issueId-resolve-parameters-0-schema:
+      example: tempor in aliqua
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--safety-events-get-parameters-0-schema:
+      example: "{{nextCursor}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--safety-events-get-parameters-1-schema:
+      example: "1"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--safety-events-get-parameters-2-schema:
+      example: 2021-01-06T03:24:53.000Z
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--safety-events-get-parameters-3-schema:
+      example: 2021-01-06T03:24:53.000Z
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--safety-events-get-parameters-4-schema:
+      example: 2021-01-06T03:24:53.000Z
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--safety-events-get-parameters-5-schema:
+      example: 2021-01-06T03:24:53.000Z
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--safety-events-get-parameters-6-schema:
+      example: "{{driverId}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--safety-events-get-parameters-7-schema:
+      example: "{{vehicleId}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--safety-events-get-parameters-8-schema:
+      example: ""
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--safety-events-get-parameters-9-schema:
+      example: "true"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--safety-events-get-parameters-10-schema:
+      example: "{{connectionToken}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--trailers-get-parameters-0-schema:
+      example: "1"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--trailers-get-parameters-1-schema:
+      example: "{{nextCursor}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--trailers-get-parameters-2-schema:
+      example: ""
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--trailers-get-parameters-3-schema:
+      example: "true"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--trailers-get-parameters-4-schema:
+      example: 2021-01-06T03:24:53.000Z
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--trailers-get-parameters-5-schema:
+      example: 2021-01-06T03:24:53.000Z
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--trailers-get-parameters-6-schema:
+      example: "{{connectionToken}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--trailers-locations-get-parameters-0-schema:
+      example: "1"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--trailers-locations-get-parameters-1-schema:
+      example: "{{nextCursor}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--trailers-locations-get-parameters-2-schema:
+      example: ""
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--trailers-locations-get-parameters-3-schema:
+      example: "true"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--trailers-locations-get-parameters-4-schema:
+      example: "{{connectionToken}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--vehicles-get-parameters-0-schema:
+      example: "{{nextCursor}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--vehicles-get-parameters-1-schema:
+      example: "1"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--vehicles-get-parameters-2-schema:
+      example: 2021-01-06T03:24:53.000Z
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--vehicles-get-parameters-3-schema:
+      example: 2021-01-06T03:24:53.000Z
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--vehicles-get-parameters-4-schema:
+      example: "true"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--vehicles-get-parameters-5-schema:
+      example: ""
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--vehicles-get-parameters-6-schema:
+      example: "{{connectionToken}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--vehicles-id-parameters-0-schema:
+      example: "{{vehicleId}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--vehicles-id-get-parameters-0-schema:
+      example: "true"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--vehicles-id-get-parameters-1-schema:
+      example: ""
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--vehicles-id-get-parameters-2-schema:
+      example: "{{connectionToken}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--vehicles-locations-get-parameters-0-schema:
+      example: "{{nextCursor}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--vehicles-locations-get-parameters-1-schema:
+      example: "1"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--vehicles-locations-get-parameters-2-schema:
+      example: "true"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--vehicles-locations-get-parameters-3-schema:
+      example: "{{vehicleId}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--vehicles-locations-get-parameters-4-schema:
+      example: ""
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--vehicles-locations-get-parameters-5-schema:
+      example: "{{connectionToken}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--vehicles-vehicleId-locations-parameters-0-schema:
+      example: "{{vehicleId}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--vehicles-vehicleId-locations-get-parameters-0-schema:
+      example: "{{nextCursor}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--vehicles-vehicleId-locations-get-parameters-1-schema:
+      example: "1"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--vehicles-vehicleId-locations-get-parameters-2-schema:
+      example: 2021-01-06T03:24:53.000Z
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--vehicles-vehicleId-locations-get-parameters-3-schema:
+      example: 2021-01-06T03:24:53.000Z
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--vehicles-vehicleId-locations-get-parameters-4-schema:
+      example: "true"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--vehicles-vehicleId-locations-get-parameters-5-schema:
+      example: "{{connectionToken}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--vehicles-vehicleId-stats-historical-parameters-0-schema:
+      example: "{{vehicleId}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--vehicles-vehicleId-stats-historical-get-parameters-0-schema:
+      example: "{{nextCursor}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--vehicles-vehicleId-stats-historical-get-parameters-1-schema:
+      example: "1"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--vehicles-vehicleId-stats-historical-get-parameters-2-schema:
+      example: ""
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--vehicles-vehicleId-stats-historical-get-parameters-3-schema:
+      example: 2021-01-06T03:24:53.000Z
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--vehicles-vehicleId-stats-historical-get-parameters-4-schema:
+      example: 2021-01-06T03:24:53.000Z
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--vehicles-vehicleId-stats-historical-get-parameters-5-schema:
+      example: "odometer,engine_state,fuel_level,total_fuel_consumption"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--vehicles-vehicleId-stats-historical-get-parameters-6-schema:
+      example: "true"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--vehicles-vehicleId-stats-historical-get-parameters-7-schema:
+      example: "{{connectionToken}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--trips-get-parameters-0-schema:
+      example: "{{nextCursor}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--trips-get-parameters-1-schema:
+      example: "1"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--trips-get-parameters-2-schema:
+      example: 2021-01-06T03:24:53.000Z
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--trips-get-parameters-3-schema:
+      example: 2021-01-06T03:24:53.000Z
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--trips-get-parameters-4-schema:
+      example: 2021-01-06T03:24:53.000Z
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--trips-get-parameters-5-schema:
+      example: 2021-01-06T03:24:53.000Z
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--trips-get-parameters-6-schema:
+      example: 2021-01-06T03:24:53.000Z
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--trips-get-parameters-7-schema:
+      example: 2021-01-06T03:24:53.000Z
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--trips-get-parameters-8-schema:
+      example: "{{driverId}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--trips-get-parameters-9-schema:
+      example: "{{vehicleId}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--trips-get-parameters-10-schema:
+      example: "true"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--trips-get-parameters-11-schema:
+      example: ""
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--trips-get-parameters-12-schema:
+      example: "{{connectionToken}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-AuthenticationExchangeTokenRequest-properties-publicToken:
+      example: INSERT_PUBLIC_TOKEN
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-tags:
+      example:
+      - Tag Name
+      - Tag Name
+      items:
+        example: Tag Name
+        type: string
+      type: array
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-tags-items:
+      example: Tag Name
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-backfill-properties-days:
+      example: 45896231.10260823
+      type: number
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-backfill-properties-startFrom:
+      example: 2021-01-06T03:24:53.000Z
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-company-properties-dotNumbers:
+      example:
+      - tempor ea cupidatat incididunt proident
+      - cupidatat occaecat do enim
+      items:
+        example: tempor ea cupidatat incididunt proident
+        type: string
+      type: array
+      x-do-not-generate: true
+    ? konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-company-properties-dotNumbers-items
+    : example: tempor ea cupidatat incididunt proident
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-company-properties-name:
+      example: minim nostrud
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-credentials-properties-database:
+      example: amet ut laborum est
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-credentials-properties-password:
+      example: esse ut nostrud
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-credentials-properties-username:
+      example: nisi in culpa
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-externalId:
+      example: ullamco dolore ipsum
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-provider:
+      example: geotab
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-syncMode:
+      example: automatic
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-ConnectionsUpdateCurrentConnectionDetailsRequest-properties-tags:
+      example:
+      - dolor in magna
+      - reprehenderit dolor nostrud
+      items:
+        example: dolor in magna
+        type: string
+      type: array
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-ConnectionsUpdateCurrentConnectionDetailsRequest-properties-tags-items:
+      example: dolor in magna
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-ConnectionsUpdateCurrentConnectionDetailsRequest-properties-company-properties-name:
+      example: Acme Inc.
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-ConnectionsUpdateCurrentConnectionDetailsRequest-properties-externalId:
+      example: ad sed dolore cupidatat
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-ConnectionsUpdateCurrentConnectionDetailsRequest-properties-status:
+      example: laborum sed consectetur
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-ConnectionsUpdateCurrentConnectionDetailsRequest-properties-syncMode:
+      example: automatic
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-DataManagementRequestSyncManualRequest-properties-days:
+      example: 7
+      type: number
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-DataManagementMakePassthroughRequestRequest-properties-body:
+      example: "{\"reportId\":\"1234\"}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-DataManagementMakePassthroughRequestRequest-properties-method:
+      example: POST
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-DataManagementMakePassthroughRequestRequest-properties-path:
+      example: /reports
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-IssuesMarkResolvedRequest:
+      example: {}
+      properties: {}
+      type: object
+      x-do-not-generate: true
+    konfig-generated-schema-single-parameter-schema-post--public-token-exchange:
+      properties:
+        publicToken:
+          example: INSERT_PUBLIC_TOKEN
+          type: string
+          x-konfig-original-example: INSERT_PUBLIC_TOKEN
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-AuthenticationExchangeTokenRequest-properties-publicToken
+      type: object
+      x-do-not-generate: true
+      x-konfig-is-parameter: []
+    konfig-generated-schema-single-parameter-schema-get--connections:
+      properties:
+        cursor:
+          example: "{{nextCursor}}"
+          type: string
+          x-konfig-original-example: "{{nextCursor}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--connections-get-parameters-0-schema
+        limit:
+          example: "1"
+          type: string
+          x-konfig-original-example: "1"
+          x-konfig-generated-schema: konfig-generated-schema-paths--connections-get-parameters-1-schema
+        externalId:
+          example: "123"
+          type: string
+          x-konfig-original-example: "123"
+          x-konfig-generated-schema: konfig-generated-schema-paths--connections-get-parameters-2-schema
+        dotNumber:
+          example: "123"
+          type: string
+          x-konfig-original-example: "123"
+          x-konfig-generated-schema: konfig-generated-schema-paths--connections-get-parameters-3-schema
+        tag:
+          example: tempor in aliqua
+          type: string
+          x-konfig-original-example: tempor in aliqua
+          x-konfig-generated-schema: konfig-generated-schema-paths--connections-get-parameters-4-schema
+      type: object
+      x-do-not-generate: true
+      x-konfig-is-parameter:
+      - cursor
+      - limit
+      - externalId
+      - dotNumber
+      - tag
+    konfig-generated-schema-single-parameter-schema-post--connections:
+      properties:
+        tags:
+          example:
+          - Tag Name
+          - Tag Name
+          items:
+            example: Tag Name
+            type: string
+            x-konfig-original-example: Tag Name
+            x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-tags-items
+          type: array
+          x-konfig-original-example:
+          - Tag Name
+          - Tag Name
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-tags
+        backfill:
+          properties:
+            days:
+              example: 45896231.10260823
+              type: number
+              x-konfig-original-example: 4.589623110260823E7
+              x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-backfill-properties-days
+            startFrom:
+              example: 2021-01-06T03:24:53.000Z
+              type: string
+              x-konfig-original-example: 2021-01-06T03:24:53.000Z
+              x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-backfill-properties-startFrom
+          type: object
+        company:
+          properties:
+            dotNumbers:
+              example:
+              - tempor ea cupidatat incididunt proident
+              - cupidatat occaecat do enim
+              items:
+                example: tempor ea cupidatat incididunt proident
+                type: string
+                x-konfig-original-example: tempor ea cupidatat incididunt proident
+                x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-company-properties-dotNumbers-items
+              type: array
+              x-konfig-original-example:
+              - tempor ea cupidatat incididunt proident
+              - cupidatat occaecat do enim
+              x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-company-properties-dotNumbers
+            name:
+              example: minim nostrud
+              type: string
+              x-konfig-original-example: minim nostrud
+              x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-company-properties-name
+          type: object
+        credentials:
+          properties:
+            database:
+              example: amet ut laborum est
+              type: string
+              x-konfig-original-example: amet ut laborum est
+              x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-credentials-properties-database
+            password:
+              example: esse ut nostrud
+              type: string
+              x-konfig-original-example: esse ut nostrud
+              x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-credentials-properties-password
+            username:
+              example: nisi in culpa
+              type: string
+              x-konfig-original-example: nisi in culpa
+              x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-credentials-properties-username
+          type: object
+        externalId:
+          example: ullamco dolore ipsum
+          type: string
+          x-konfig-original-example: ullamco dolore ipsum
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-externalId
+        provider:
+          example: geotab
+          type: string
+          x-konfig-original-example: geotab
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-provider
+        syncMode:
+          example: automatic
+          type: string
+          x-konfig-original-example: automatic
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-syncMode
+      type: object
+      x-do-not-generate: true
+      x-konfig-is-parameter: []
+    konfig-generated-schema-single-parameter-schema-get--connections-current:
+      properties:
+        connection-token:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--connections-current-get-parameters-0-schema
+      type: object
+      x-do-not-generate: true
+      x-konfig-is-parameter:
+      - connection-token
+    konfig-generated-schema-single-parameter-schema-patch--connections-current:
+      properties:
+        connection-token:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--connections-current-patch-parameters-0-schema
+        tags:
+          example:
+          - dolor in magna
+          - reprehenderit dolor nostrud
+          items:
+            example: dolor in magna
+            type: string
+            x-konfig-original-example: dolor in magna
+            x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsUpdateCurrentConnectionDetailsRequest-properties-tags-items
+          type: array
+          x-konfig-original-example:
+          - dolor in magna
+          - reprehenderit dolor nostrud
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsUpdateCurrentConnectionDetailsRequest-properties-tags
+        company:
+          properties:
+            name:
+              example: Acme Inc.
+              type: string
+              x-konfig-original-example: Acme Inc.
+              x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsUpdateCurrentConnectionDetailsRequest-properties-company-properties-name
+          type: object
+        externalId:
+          example: ad sed dolore cupidatat
+          type: string
+          x-konfig-original-example: ad sed dolore cupidatat
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsUpdateCurrentConnectionDetailsRequest-properties-externalId
+        status:
+          example: laborum sed consectetur
+          type: string
+          x-konfig-original-example: laborum sed consectetur
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsUpdateCurrentConnectionDetailsRequest-properties-status
+        syncMode:
+          example: automatic
+          type: string
+          x-konfig-original-example: automatic
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsUpdateCurrentConnectionDetailsRequest-properties-syncMode
+      type: object
+      x-do-not-generate: true
+      x-konfig-is-parameter:
+      - connection-token
+    konfig-generated-schema-single-parameter-schema-get--syncs:
+      properties:
+        limit:
+          example: "1"
+          type: string
+          x-konfig-original-example: "1"
+          x-konfig-generated-schema: konfig-generated-schema-paths--syncs-get-parameters-0-schema
+        cursor:
+          example: "{{nextCursor}}"
+          type: string
+          x-konfig-original-example: "{{nextCursor}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--syncs-get-parameters-1-schema
+        status:
+          example: in_progress
+          type: string
+          x-konfig-original-example: in_progress
+          x-konfig-generated-schema: konfig-generated-schema-paths--syncs-get-parameters-2-schema
+        expand:
+          example: ""
+          type: string
+          x-konfig-original-example: ""
+          x-konfig-generated-schema: konfig-generated-schema-paths--syncs-get-parameters-3-schema
+        connection-token:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--syncs-get-parameters-4-schema
+      type: object
+      x-do-not-generate: true
+      x-konfig-is-parameter:
+      - limit
+      - cursor
+      - status
+      - expand
+      - connection-token
+    konfig-generated-schema-single-parameter-schema-post--syncs:
+      properties:
+        connection-token:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--syncs-post-parameters-0-schema
+        days:
+          example: 7
+          type: number
+          x-konfig-original-example: 7
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-DataManagementRequestSyncManualRequest-properties-days
+      type: object
+      x-do-not-generate: true
+      x-konfig-is-parameter:
+      - connection-token
+    konfig-generated-schema-single-parameter-schema-get--syncs-id:
+      properties:
+        expand:
+          example: ""
+          type: string
+          x-konfig-original-example: ""
+          x-konfig-generated-schema: konfig-generated-schema-paths--syncs-id-get-parameters-0-schema
+        connection-token:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--syncs-id-get-parameters-1-schema
+      type: object
+      x-do-not-generate: true
+      x-konfig-is-parameter:
+      - expand
+      - connection-token
+    konfig-generated-schema-single-parameter-schema-post--passthrough:
+      properties:
+        connection-token:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--passthrough-post-parameters-0-schema
+        body:
+          example: "{\"reportId\":\"1234\"}"
+          type: string
+          x-konfig-original-example: "{\"reportId\":\"1234\"}"
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-DataManagementMakePassthroughRequestRequest-properties-body
+        headers:
+          properties: {}
+          type: object
+        method:
+          example: POST
+          type: string
+          x-konfig-original-example: POST
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-DataManagementMakePassthroughRequestRequest-properties-method
+        path:
+          example: /reports
+          type: string
+          x-konfig-original-example: /reports
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-DataManagementMakePassthroughRequestRequest-properties-path
+      type: object
+      x-do-not-generate: true
+      x-konfig-is-parameter:
+      - connection-token
+    konfig-generated-schema-single-parameter-schema-get--drivers:
+      properties:
+        cursor:
+          example: "{{nextCursor}}"
+          type: string
+          x-konfig-original-example: "{{nextCursor}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--drivers-get-parameters-0-schema
+        limit:
+          example: "1"
+          type: string
+          x-konfig-original-example: "1"
+          x-konfig-generated-schema: konfig-generated-schema-paths--drivers-get-parameters-1-schema
+        modifiedAfter:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--drivers-get-parameters-2-schema
+        modifiedBefore:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--drivers-get-parameters-3-schema
+        raw:
+          example: "true"
+          type: string
+          x-konfig-original-example: "true"
+          x-konfig-generated-schema: konfig-generated-schema-paths--drivers-get-parameters-4-schema
+        expand:
+          example: ""
+          type: string
+          x-konfig-original-example: ""
+          x-konfig-generated-schema: konfig-generated-schema-paths--drivers-get-parameters-5-schema
+        connection-token:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--drivers-get-parameters-6-schema
+      type: object
+      x-do-not-generate: true
+      x-konfig-is-parameter:
+      - cursor
+      - limit
+      - modifiedAfter
+      - modifiedBefore
+      - raw
+      - expand
+      - connection-token
+    konfig-generated-schema-single-parameter-schema-get--drivers-id:
+      properties:
+        raw:
+          example: "true"
+          type: string
+          x-konfig-original-example: "true"
+          x-konfig-generated-schema: konfig-generated-schema-paths--drivers-id-get-parameters-0-schema
+        expand:
+          example: ""
+          type: string
+          x-konfig-original-example: ""
+          x-konfig-generated-schema: konfig-generated-schema-paths--drivers-id-get-parameters-1-schema
+        connection-token:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--drivers-id-get-parameters-2-schema
+      type: object
+      x-do-not-generate: true
+      x-konfig-is-parameter:
+      - raw
+      - expand
+      - connection-token
+    konfig-generated-schema-single-parameter-schema-get--groups:
+      properties:
+        limit:
+          example: "1"
+          type: string
+          x-konfig-original-example: "1"
+          x-konfig-generated-schema: konfig-generated-schema-paths--groups-get-parameters-0-schema
+        cursor:
+          example: "{{nextCursor}}"
+          type: string
+          x-konfig-original-example: "{{nextCursor}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--groups-get-parameters-1-schema
+        expand:
+          example: ""
+          type: string
+          x-konfig-original-example: ""
+          x-konfig-generated-schema: konfig-generated-schema-paths--groups-get-parameters-2-schema
+        raw:
+          example: "true"
+          type: string
+          x-konfig-original-example: "true"
+          x-konfig-generated-schema: konfig-generated-schema-paths--groups-get-parameters-3-schema
+        modifiedAfter:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--groups-get-parameters-4-schema
+        modifiedBefore:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--groups-get-parameters-5-schema
+        connection-token:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--groups-get-parameters-6-schema
+      type: object
+      x-do-not-generate: true
+      x-konfig-is-parameter:
+      - limit
+      - cursor
+      - expand
+      - raw
+      - modifiedAfter
+      - modifiedBefore
+      - connection-token
+    konfig-generated-schema-single-parameter-schema-get--hos-available-time:
+      properties:
+        cursor:
+          example: "{{nextCursor}}"
+          type: string
+          x-konfig-original-example: "{{nextCursor}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-available-time-get-parameters-0-schema
+        limit:
+          example: "1"
+          type: string
+          x-konfig-original-example: "1"
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-available-time-get-parameters-1-schema
+        driverIds:
+          example: "{{driverId}}"
+          type: string
+          x-konfig-original-example: "{{driverId}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-available-time-get-parameters-2-schema
+        expand:
+          example: ""
+          type: string
+          x-konfig-original-example: ""
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-available-time-get-parameters-3-schema
+        raw:
+          example: "true"
+          type: string
+          x-konfig-original-example: "true"
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-available-time-get-parameters-4-schema
+        connection-token:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-available-time-get-parameters-5-schema
+      type: object
+      x-do-not-generate: true
+      x-konfig-is-parameter:
+      - cursor
+      - limit
+      - driverIds
+      - expand
+      - raw
+      - connection-token
+    konfig-generated-schema-single-parameter-schema-get--hos-logs:
+      properties:
+        cursor:
+          example: "{{nextCursor}}"
+          type: string
+          x-konfig-original-example: "{{nextCursor}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-logs-get-parameters-0-schema
+        limit:
+          example: "1"
+          type: string
+          x-konfig-original-example: "1"
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-logs-get-parameters-1-schema
+        startedAfter:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-logs-get-parameters-2-schema
+        startedBefore:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-logs-get-parameters-3-schema
+        modifiedAfter:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-logs-get-parameters-4-schema
+        modifiedBefore:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-logs-get-parameters-5-schema
+        driverIds:
+          example: "{{driverId}}"
+          type: string
+          x-konfig-original-example: "{{driverId}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-logs-get-parameters-6-schema
+        expand:
+          example: ""
+          type: string
+          x-konfig-original-example: ""
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-logs-get-parameters-7-schema
+        raw:
+          example: "true"
+          type: string
+          x-konfig-original-example: "true"
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-logs-get-parameters-8-schema
+        connection-token:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-logs-get-parameters-9-schema
+      type: object
+      x-do-not-generate: true
+      x-konfig-is-parameter:
+      - cursor
+      - limit
+      - startedAfter
+      - startedBefore
+      - modifiedAfter
+      - modifiedBefore
+      - driverIds
+      - expand
+      - raw
+      - connection-token
+    konfig-generated-schema-single-parameter-schema-get--hos-daily-logs:
+      properties:
+        cursor:
+          example: "{{nextCursor}}"
+          type: string
+          x-konfig-original-example: "{{nextCursor}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-daily-logs-get-parameters-0-schema
+        limit:
+          example: "1"
+          type: string
+          x-konfig-original-example: "1"
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-daily-logs-get-parameters-1-schema
+        startDate:
+          example: 1995-04-25
+          type: string
+          x-konfig-original-example: 1995-04-25
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-daily-logs-get-parameters-2-schema
+        endDate:
+          example: 1995-04-25
+          type: string
+          x-konfig-original-example: 1995-04-25
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-daily-logs-get-parameters-3-schema
+        modifiedAfter:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-daily-logs-get-parameters-4-schema
+        modifiedBefore:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-daily-logs-get-parameters-5-schema
+        driverIds:
+          example: "{{driverId}}"
+          type: string
+          x-konfig-original-example: "{{driverId}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-daily-logs-get-parameters-6-schema
+        raw:
+          example: "true"
+          type: string
+          x-konfig-original-example: "true"
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-daily-logs-get-parameters-7-schema
+        expand:
+          example: ""
+          type: string
+          x-konfig-original-example: ""
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-daily-logs-get-parameters-8-schema
+        connection-token:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--hos-daily-logs-get-parameters-9-schema
+      type: object
+      x-do-not-generate: true
+      x-konfig-is-parameter:
+      - cursor
+      - limit
+      - startDate
+      - endDate
+      - modifiedAfter
+      - modifiedBefore
+      - driverIds
+      - raw
+      - expand
+      - connection-token
+    konfig-generated-schema-single-parameter-schema-get--ifta-summary:
+      properties:
+        cursor:
+          example: "{{nextCursor}}"
+          type: string
+          x-konfig-original-example: "{{nextCursor}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--ifta-summary-get-parameters-0-schema
+        expand:
+          example: ""
+          type: string
+          x-konfig-original-example: ""
+          x-konfig-generated-schema: konfig-generated-schema-paths--ifta-summary-get-parameters-1-schema
+        raw:
+          example: "true"
+          type: string
+          x-konfig-original-example: "true"
+          x-konfig-generated-schema: konfig-generated-schema-paths--ifta-summary-get-parameters-2-schema
+        startMonth:
+          example: 2021-01
+          type: string
+          x-konfig-original-example: 2021-01
+          x-konfig-generated-schema: konfig-generated-schema-paths--ifta-summary-get-parameters-3-schema
+        endMonth:
+          example: 2021-01
+          type: string
+          x-konfig-original-example: 2021-01
+          x-konfig-generated-schema: konfig-generated-schema-paths--ifta-summary-get-parameters-4-schema
+        groupBy:
+          example: "vehicle,jurisdiction"
+          type: string
+          x-konfig-original-example: "vehicle,jurisdiction"
+          x-konfig-generated-schema: konfig-generated-schema-paths--ifta-summary-get-parameters-5-schema
+        connection-token:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--ifta-summary-get-parameters-6-schema
+      type: object
+      x-do-not-generate: true
+      x-konfig-is-parameter:
+      - cursor
+      - expand
+      - raw
+      - startMonth
+      - endMonth
+      - groupBy
+      - connection-token
+    konfig-generated-schema-single-parameter-schema-get--issues:
+      properties:
+        limit:
+          example: "1"
+          type: string
+          x-konfig-original-example: "1"
+          x-konfig-generated-schema: konfig-generated-schema-paths--issues-get-parameters-0-schema
+        cursor:
+          example: "{{nextCursor}}"
+          type: string
+          x-konfig-original-example: "{{nextCursor}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--issues-get-parameters-1-schema
+        lastReportedAfter:
+          example: 2023-06-07
+          type: string
+          x-konfig-original-example: 2023-06-07
+          x-konfig-generated-schema: konfig-generated-schema-paths--issues-get-parameters-2-schema
+        lastReportedBefore:
+          example: 2023-06-07
+          type: string
+          x-konfig-original-example: 2023-06-07
+          x-konfig-generated-schema: konfig-generated-schema-paths--issues-get-parameters-3-schema
+        expand:
+          example: ""
+          type: string
+          x-konfig-original-example: ""
+          x-konfig-generated-schema: konfig-generated-schema-paths--issues-get-parameters-4-schema
+        connectionId:
+          example: conn_01GV12VR4DJP70GD1ZBK0SDWFH
+          type: string
+          x-konfig-original-example: conn_01GV12VR4DJP70GD1ZBK0SDWFH
+          x-konfig-generated-schema: konfig-generated-schema-paths--issues-get-parameters-5-schema
+        errorCode:
+          example: invalid_source_id
+          type: string
+          x-konfig-original-example: invalid_source_id
+          x-konfig-generated-schema: konfig-generated-schema-paths--issues-get-parameters-6-schema
+        status:
+          example: ongoing
+          type: string
+          x-konfig-original-example: ongoing
+          x-konfig-generated-schema: konfig-generated-schema-paths--issues-get-parameters-7-schema
+      type: object
+      x-do-not-generate: true
+      x-konfig-is-parameter:
+      - limit
+      - cursor
+      - lastReportedAfter
+      - lastReportedBefore
+      - expand
+      - connectionId
+      - errorCode
+      - status
+    konfig-generated-schema-single-parameter-schema-post--issues-issueId-resolve:
+      properties: {}
+      type: object
+      x-do-not-generate: true
+      x-konfig-is-parameter: []
+    konfig-generated-schema-single-parameter-schema-get--providers:
+      properties: {}
+      type: object
+      x-do-not-generate: true
+      x-konfig-is-parameter: []
+    konfig-generated-schema-single-parameter-schema-get--safety-events:
+      properties:
+        cursor:
+          example: "{{nextCursor}}"
+          type: string
+          x-konfig-original-example: "{{nextCursor}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--safety-events-get-parameters-0-schema
+        limit:
+          example: "1"
+          type: string
+          x-konfig-original-example: "1"
+          x-konfig-generated-schema: konfig-generated-schema-paths--safety-events-get-parameters-1-schema
+        modifiedAfter:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--safety-events-get-parameters-2-schema
+        modifiedBefore:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--safety-events-get-parameters-3-schema
+        startedAfter:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--safety-events-get-parameters-4-schema
+        startedBefore:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--safety-events-get-parameters-5-schema
+        driverIds:
+          example: "{{driverId}}"
+          type: string
+          x-konfig-original-example: "{{driverId}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--safety-events-get-parameters-6-schema
+        vehicleIds:
+          example: "{{vehicleId}}"
+          type: string
+          x-konfig-original-example: "{{vehicleId}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--safety-events-get-parameters-7-schema
+        expand:
+          example: ""
+          type: string
+          x-konfig-original-example: ""
+          x-konfig-generated-schema: konfig-generated-schema-paths--safety-events-get-parameters-8-schema
+        raw:
+          example: "true"
+          type: string
+          x-konfig-original-example: "true"
+          x-konfig-generated-schema: konfig-generated-schema-paths--safety-events-get-parameters-9-schema
+        connection-token:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--safety-events-get-parameters-10-schema
+      type: object
+      x-do-not-generate: true
+      x-konfig-is-parameter:
+      - cursor
+      - limit
+      - modifiedAfter
+      - modifiedBefore
+      - startedAfter
+      - startedBefore
+      - driverIds
+      - vehicleIds
+      - expand
+      - raw
+      - connection-token
+    konfig-generated-schema-single-parameter-schema-get--trailers:
+      properties:
+        limit:
+          example: "1"
+          type: string
+          x-konfig-original-example: "1"
+          x-konfig-generated-schema: konfig-generated-schema-paths--trailers-get-parameters-0-schema
+        cursor:
+          example: "{{nextCursor}}"
+          type: string
+          x-konfig-original-example: "{{nextCursor}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--trailers-get-parameters-1-schema
+        expand:
+          example: ""
+          type: string
+          x-konfig-original-example: ""
+          x-konfig-generated-schema: konfig-generated-schema-paths--trailers-get-parameters-2-schema
+        raw:
+          example: "true"
+          type: string
+          x-konfig-original-example: "true"
+          x-konfig-generated-schema: konfig-generated-schema-paths--trailers-get-parameters-3-schema
+        modifiedAfter:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--trailers-get-parameters-4-schema
+        modifiedBefore:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--trailers-get-parameters-5-schema
+        connection-token:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--trailers-get-parameters-6-schema
+      type: object
+      x-do-not-generate: true
+      x-konfig-is-parameter:
+      - limit
+      - cursor
+      - expand
+      - raw
+      - modifiedAfter
+      - modifiedBefore
+      - connection-token
+    konfig-generated-schema-single-parameter-schema-get--trailers-locations:
+      properties:
+        limit:
+          example: "1"
+          type: string
+          x-konfig-original-example: "1"
+          x-konfig-generated-schema: konfig-generated-schema-paths--trailers-locations-get-parameters-0-schema
+        cursor:
+          example: "{{nextCursor}}"
+          type: string
+          x-konfig-original-example: "{{nextCursor}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--trailers-locations-get-parameters-1-schema
+        expand:
+          example: ""
+          type: string
+          x-konfig-original-example: ""
+          x-konfig-generated-schema: konfig-generated-schema-paths--trailers-locations-get-parameters-2-schema
+        raw:
+          example: "true"
+          type: string
+          x-konfig-original-example: "true"
+          x-konfig-generated-schema: konfig-generated-schema-paths--trailers-locations-get-parameters-3-schema
+        connection-token:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--trailers-locations-get-parameters-4-schema
+      type: object
+      x-do-not-generate: true
+      x-konfig-is-parameter:
+      - limit
+      - cursor
+      - expand
+      - raw
+      - connection-token
+    konfig-generated-schema-single-parameter-schema-get--vehicles:
+      properties:
+        cursor:
+          example: "{{nextCursor}}"
+          type: string
+          x-konfig-original-example: "{{nextCursor}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-get-parameters-0-schema
+        limit:
+          example: "1"
+          type: string
+          x-konfig-original-example: "1"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-get-parameters-1-schema
+        modifiedAfter:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-get-parameters-2-schema
+        modifiedBefore:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-get-parameters-3-schema
+        raw:
+          example: "true"
+          type: string
+          x-konfig-original-example: "true"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-get-parameters-4-schema
+        expand:
+          example: ""
+          type: string
+          x-konfig-original-example: ""
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-get-parameters-5-schema
+        connection-token:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-get-parameters-6-schema
+      type: object
+      x-do-not-generate: true
+      x-konfig-is-parameter:
+      - cursor
+      - limit
+      - modifiedAfter
+      - modifiedBefore
+      - raw
+      - expand
+      - connection-token
+    konfig-generated-schema-single-parameter-schema-get--vehicles-id:
+      properties:
+        raw:
+          example: "true"
+          type: string
+          x-konfig-original-example: "true"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-id-get-parameters-0-schema
+        expand:
+          example: ""
+          type: string
+          x-konfig-original-example: ""
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-id-get-parameters-1-schema
+        connection-token:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-id-get-parameters-2-schema
+      type: object
+      x-do-not-generate: true
+      x-konfig-is-parameter:
+      - raw
+      - expand
+      - connection-token
+    konfig-generated-schema-single-parameter-schema-get--vehicles-locations:
+      properties:
+        cursor:
+          example: "{{nextCursor}}"
+          type: string
+          x-konfig-original-example: "{{nextCursor}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-locations-get-parameters-0-schema
+        limit:
+          example: "1"
+          type: string
+          x-konfig-original-example: "1"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-locations-get-parameters-1-schema
+        raw:
+          example: "true"
+          type: string
+          x-konfig-original-example: "true"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-locations-get-parameters-2-schema
+        vehicleIds:
+          example: "{{vehicleId}}"
+          type: string
+          x-konfig-original-example: "{{vehicleId}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-locations-get-parameters-3-schema
+        expand:
+          example: ""
+          type: string
+          x-konfig-original-example: ""
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-locations-get-parameters-4-schema
+        connection-token:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-locations-get-parameters-5-schema
+      type: object
+      x-do-not-generate: true
+      x-konfig-is-parameter:
+      - cursor
+      - limit
+      - raw
+      - vehicleIds
+      - expand
+      - connection-token
+    konfig-generated-schema-single-parameter-schema-get--vehicles-vehicleId-locations:
+      properties:
+        cursor:
+          example: "{{nextCursor}}"
+          type: string
+          x-konfig-original-example: "{{nextCursor}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-vehicleId-locations-get-parameters-0-schema
+        limit:
+          example: "1"
+          type: string
+          x-konfig-original-example: "1"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-vehicleId-locations-get-parameters-1-schema
+        startAt:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-vehicleId-locations-get-parameters-2-schema
+        endAt:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-vehicleId-locations-get-parameters-3-schema
+        raw:
+          example: "true"
+          type: string
+          x-konfig-original-example: "true"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-vehicleId-locations-get-parameters-4-schema
+        connection-token:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-vehicleId-locations-get-parameters-5-schema
+      type: object
+      x-do-not-generate: true
+      x-konfig-is-parameter:
+      - cursor
+      - limit
+      - startAt
+      - endAt
+      - raw
+      - connection-token
+    konfig-generated-schema-single-parameter-schema-get--vehicles-vehicleId-stats-historical:
+      properties:
+        cursor:
+          example: "{{nextCursor}}"
+          type: string
+          x-konfig-original-example: "{{nextCursor}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-vehicleId-stats-historical-get-parameters-0-schema
+        limit:
+          example: "1"
+          type: string
+          x-konfig-original-example: "1"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-vehicleId-stats-historical-get-parameters-1-schema
+        expand:
+          example: ""
+          type: string
+          x-konfig-original-example: ""
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-vehicleId-stats-historical-get-parameters-2-schema
+        startAt:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-vehicleId-stats-historical-get-parameters-3-schema
+        endAt:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-vehicleId-stats-historical-get-parameters-4-schema
+        types:
+          example: "odometer,engine_state,fuel_level,total_fuel_consumption"
+          type: string
+          x-konfig-original-example: "odometer,engine_state,fuel_level,total_fuel_consumption"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-vehicleId-stats-historical-get-parameters-5-schema
+        raw:
+          example: "true"
+          type: string
+          x-konfig-original-example: "true"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-vehicleId-stats-historical-get-parameters-6-schema
+        connection-token:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--vehicles-vehicleId-stats-historical-get-parameters-7-schema
+      type: object
+      x-do-not-generate: true
+      x-konfig-is-parameter:
+      - cursor
+      - limit
+      - expand
+      - startAt
+      - endAt
+      - types
+      - raw
+      - connection-token
+    konfig-generated-schema-single-parameter-schema-get--trips:
+      properties:
+        cursor:
+          example: "{{nextCursor}}"
+          type: string
+          x-konfig-original-example: "{{nextCursor}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--trips-get-parameters-0-schema
+        limit:
+          example: "1"
+          type: string
+          x-konfig-original-example: "1"
+          x-konfig-generated-schema: konfig-generated-schema-paths--trips-get-parameters-1-schema
+        modifiedAfter:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--trips-get-parameters-2-schema
+        modifiedBefore:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--trips-get-parameters-3-schema
+        startedAfter:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--trips-get-parameters-4-schema
+        startedBefore:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--trips-get-parameters-5-schema
+        endedAfter:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--trips-get-parameters-6-schema
+        endedBefore:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--trips-get-parameters-7-schema
+        driverIds:
+          example: "{{driverId}}"
+          type: string
+          x-konfig-original-example: "{{driverId}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--trips-get-parameters-8-schema
+        vehicleIds:
+          example: "{{vehicleId}}"
+          type: string
+          x-konfig-original-example: "{{vehicleId}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--trips-get-parameters-9-schema
+        raw:
+          example: "true"
+          type: string
+          x-konfig-original-example: "true"
+          x-konfig-generated-schema: konfig-generated-schema-paths--trips-get-parameters-10-schema
+        expand:
+          example: ""
+          type: string
+          x-konfig-original-example: ""
+          x-konfig-generated-schema: konfig-generated-schema-paths--trips-get-parameters-11-schema
+        connection-token:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--trips-get-parameters-12-schema
+      type: object
+      x-do-not-generate: true
+      x-konfig-is-parameter:
+      - cursor
+      - limit
+      - modifiedAfter
+      - modifiedBefore
+      - startedAfter
+      - startedBefore
+      - endedAfter
+      - endedBefore
+      - driverIds
+      - vehicleIds
+      - raw
+      - expand
+      - connection-token
+    ConnectionsCreateCustomConnectionRequest_backfill:
+      example:
+        startFrom: 2021-01-06T03:24:53.000Z
+        days: 45896231.10260823
+      properties:
+        days:
+          example: 45896231.10260823
+          type: number
+          x-konfig-original-example: 4.589623110260823E7
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-backfill-properties-days
+        startFrom:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-backfill-properties-startFrom
+      type: object
+    ConnectionsCreateCustomConnectionRequest_company:
+      example:
+        name: minim nostrud
+        dotNumbers:
+        - tempor ea cupidatat incididunt proident
+        - cupidatat occaecat do enim
+      properties:
+        dotNumbers:
+          example:
+          - tempor ea cupidatat incididunt proident
+          - cupidatat occaecat do enim
+          items:
+            example: tempor ea cupidatat incididunt proident
+            type: string
+            x-konfig-original-example: tempor ea cupidatat incididunt proident
+            x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-company-properties-dotNumbers-items
+          type: array
+          x-konfig-original-example:
+          - tempor ea cupidatat incididunt proident
+          - cupidatat occaecat do enim
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-company-properties-dotNumbers
+        name:
+          example: minim nostrud
+          type: string
+          x-konfig-original-example: minim nostrud
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-company-properties-name
+      type: object
+    ConnectionsCreateCustomConnectionRequest_credentials:
+      example:
+        database: amet ut laborum est
+        password: esse ut nostrud
+        username: nisi in culpa
+      properties:
+        database:
+          example: amet ut laborum est
+          type: string
+          x-konfig-original-example: amet ut laborum est
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-credentials-properties-database
+        password:
+          example: esse ut nostrud
+          type: string
+          x-konfig-original-example: esse ut nostrud
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-credentials-properties-password
+        username:
+          example: nisi in culpa
+          type: string
+          x-konfig-original-example: nisi in culpa
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-credentials-properties-username
+      type: object
+    ConnectionsUpdateCurrentConnectionDetailsRequest_company:
+      example:
+        name: Acme Inc.
+      properties:
+        name:
+          example: Acme Inc.
+          type: string
+          x-konfig-original-example: Acme Inc.
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsUpdateCurrentConnectionDetailsRequest-properties-company-properties-name
+      type: object
+  securitySchemes:
+    bearerAuth:
+      scheme: bearer
+      type: http
+      x-konfig-globally-required-security: true
+
