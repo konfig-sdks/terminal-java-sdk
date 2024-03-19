@@ -149,8 +149,8 @@ public class Example {
     Terminal client = new Terminal(configuration);
     String cursor = "{{nextCursor}}"; // Pagination cursor to start requests from
     String limit = "1"; // The maximum number of results to return in a page.
-    String startDate = "1995-04-25"; // Only include daily logs from on or after a specific date
-    String endDate = "1995-04-25"; // Only include daily logs from on or before a specific date
+    String startDate = "2013-12-08"; // Only include daily logs from on or after a specific date
+    String endDate = "2013-12-08"; // Only include daily logs from on or before a specific date
     String modifiedAfter = "2021-01-06T03:24:53.000Z"; // Only include records that were last modified after a provided date.
     String modifiedBefore = "2021-01-06T03:24:53.000Z"; // Only include records that were last modified before a provided date.
     String driverIds = "{{driverId}}"; // Comma separated list of driver IDs to filter for

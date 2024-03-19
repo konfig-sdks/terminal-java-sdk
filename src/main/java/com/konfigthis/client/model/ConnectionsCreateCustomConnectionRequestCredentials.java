@@ -78,7 +78,7 @@ public class ConnectionsCreateCustomConnectionRequestCredentials {
    * @return database
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "amet ut laborum est", value = "")
+  @ApiModelProperty(example = "sint in dolore", value = "")
 
   public String getDatabase() {
     return database;
@@ -107,7 +107,7 @@ public class ConnectionsCreateCustomConnectionRequestCredentials {
    * @return password
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "esse ut nostrud", value = "")
+  @ApiModelProperty(example = "tempor sed minim", value = "")
 
   public String getPassword() {
     return password;
@@ -136,7 +136,7 @@ public class ConnectionsCreateCustomConnectionRequestCredentials {
    * @return username
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "nisi in culpa", value = "")
+  @ApiModelProperty(example = "ut incididunt aliqua", value = "")
 
   public String getUsername() {
     return username;

@@ -3,6 +3,7 @@ package com.konfigthis.client;
 import com.konfigthis.client.api.AuthenticationApi;
 import com.konfigthis.client.api.ConnectionsApi;
 import com.konfigthis.client.api.DataManagementApi;
+import com.konfigthis.client.api.DevicesApi;
 import com.konfigthis.client.api.DriversApi;
 import com.konfigthis.client.api.GroupsApi;
 import com.konfigthis.client.api.HoursOfServiceApi;
@@ -19,6 +20,7 @@ public class Terminal {
     public final AuthenticationApi authentication;
     public final ConnectionsApi connections;
     public final DataManagementApi dataManagement;
+    public final DevicesApi devices;
     public final DriversApi drivers;
     public final GroupsApi groups;
     public final HoursOfServiceApi hoursOfService;
@@ -39,6 +41,7 @@ public class Terminal {
         this.authentication = new AuthenticationApi(this.apiClient);
         this.connections = new ConnectionsApi(this.apiClient);
         this.dataManagement = new DataManagementApi(this.apiClient);
+        this.devices = new DevicesApi(this.apiClient);
         this.drivers = new DriversApi(this.apiClient);
         this.groups = new GroupsApi(this.apiClient);
         this.hoursOfService = new HoursOfServiceApi(this.apiClient);

@@ -223,7 +223,7 @@ public class ConnectionsCreateCustomConnectionRequest {
    * @return externalId
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "ullamco dolore ipsum", value = "")
+  @ApiModelProperty(example = "quis proident", value = "")
 
   public String getExternalId() {
     return externalId;

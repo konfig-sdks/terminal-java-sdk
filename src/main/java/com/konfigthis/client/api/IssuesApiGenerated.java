@@ -330,7 +330,7 @@ public class IssuesApiGenerated {
     public ListObservedEventsRequestBuilder listObservedEvents() throws IllegalArgumentException {
         return new ListObservedEventsRequestBuilder();
     }
-    private okhttp3.Call markResolvedCall(String issueId, Object body, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call markResolvedCall(String issueId, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -344,7 +344,7 @@ public class IssuesApiGenerated {
             basePath = null;
         }
 
-        Object localVarPostBody = body;
+        Object localVarPostBody = null;
 
         // create path and map variables
         String localVarPath = "/issues/{issueId}/resolve"
@@ -364,7 +364,6 @@ public class IssuesApiGenerated {
         }
 
         final String[] localVarContentTypes = {
-            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -376,25 +375,25 @@ public class IssuesApiGenerated {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call markResolvedValidateBeforeCall(String issueId, Object body, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call markResolvedValidateBeforeCall(String issueId, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'issueId' is set
         if (issueId == null) {
             throw new ApiException("Missing the required parameter 'issueId' when calling markResolved(Async)");
         }
 
-        return markResolvedCall(issueId, body, _callback);
+        return markResolvedCall(issueId, _callback);
 
     }
 
 
-    private ApiResponse<Void> markResolvedWithHttpInfo(String issueId, Object body) throws ApiException {
-        okhttp3.Call localVarCall = markResolvedValidateBeforeCall(issueId, body, null);
+    private ApiResponse<Void> markResolvedWithHttpInfo(String issueId) throws ApiException {
+        okhttp3.Call localVarCall = markResolvedValidateBeforeCall(issueId, null);
         return localVarApiClient.execute(localVarCall);
     }
 
-    private okhttp3.Call markResolvedAsync(String issueId, Object body, final ApiCallback<Void> _callback) throws ApiException {
+    private okhttp3.Call markResolvedAsync(String issueId, final ApiCallback<Void> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = markResolvedValidateBeforeCall(issueId, body, _callback);
+        okhttp3.Call localVarCall = markResolvedValidateBeforeCall(issueId, _callback);
         localVarApiClient.executeAsync(localVarCall, _callback);
         return localVarCall;
     }
@@ -418,14 +417,9 @@ public class IssuesApiGenerated {
          </table>
          */
         public okhttp3.Call buildCall(final ApiCallback _callback) throws ApiException {
-            Object body = buildBodyParams();
-            return markResolvedCall(issueId, body, _callback);
+            return markResolvedCall(issueId, _callback);
         }
 
-        private Object buildBodyParams() {
-            Object body = new Object();
-            return body;
-        }
 
         /**
          * Execute markResolved request
@@ -437,8 +431,7 @@ public class IssuesApiGenerated {
          </table>
          */
         public void execute() throws ApiException {
-            Object body = buildBodyParams();
-            markResolvedWithHttpInfo(issueId, body);
+            markResolvedWithHttpInfo(issueId);
         }
 
         /**
@@ -452,8 +445,7 @@ public class IssuesApiGenerated {
          </table>
          */
         public ApiResponse<Void> executeWithHttpInfo() throws ApiException {
-            Object body = buildBodyParams();
-            return markResolvedWithHttpInfo(issueId, body);
+            return markResolvedWithHttpInfo(issueId);
         }
 
         /**
@@ -468,8 +460,7 @@ public class IssuesApiGenerated {
          </table>
          */
         public okhttp3.Call executeAsync(final ApiCallback<Void> _callback) throws ApiException {
-            Object body = buildBodyParams();
-            return markResolvedAsync(issueId, body, _callback);
+            return markResolvedAsync(issueId, _callback);
         }
     }
 

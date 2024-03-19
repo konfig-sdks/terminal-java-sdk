@@ -97,7 +97,7 @@ public class ConnectionsUpdateCurrentConnectionDetailsRequest {
    * @return tags
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "[\"dolor in magna\",\"reprehenderit dolor nostrud\"]", value = "")
+  @ApiModelProperty(example = "[\"esse sit veniam et\",\"sunt u\"]", value = "")
 
   public List<String> getTags() {
     return tags;
@@ -155,7 +155,7 @@ public class ConnectionsUpdateCurrentConnectionDetailsRequest {
    * @return externalId
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "ad sed dolore cupidatat", value = "")
+  @ApiModelProperty(example = "eu cillum", value = "")
 
   public String getExternalId() {
     return externalId;
@@ -184,7 +184,7 @@ public class ConnectionsUpdateCurrentConnectionDetailsRequest {
    * @return status
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "laborum sed consectetur", value = "")
+  @ApiModelProperty(example = "incididunt reprehenderit sunt", value = "")
 
   public String getStatus() {
     return status;

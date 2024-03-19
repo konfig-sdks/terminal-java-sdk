@@ -238,7 +238,7 @@ public class Example {
     String limit = "1"; // The maximum number of results to return in a page.
     String externalId = "123";
     String dotNumber = "123";
-    String tag = "tempor in aliqua"; // Filter connections by tag
+    String tag = "qui tempor"; // Filter connections by tag
     try {
       client
               .connections

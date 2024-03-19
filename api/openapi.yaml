@@ -10,7 +10,6 @@ info:
   title: Terminal API
   version: 1.0.0
   x-konfig-ignore:
-    object-with-no-properties: true
     potential-incorrect-type: true
   x-konfig-has-globally-required-security: true
 servers:
@@ -44,6 +43,8 @@ tags:
   name: Safety
 - description: ""
   name: Trips
+- description: ""
+  name: Devices
 - description: ""
   name: Webhook Events
 paths:
@@ -126,9 +127,9 @@ paths:
         name: tag
         required: false
         schema:
-          example: tempor in aliqua
+          example: qui tempor
           type: string
-          x-konfig-original-example: tempor in aliqua
+          x-konfig-original-example: qui tempor
           x-konfig-generated-schema: konfig-generated-schema-paths--connections-get-parameters-4-schema
         style: form
       responses:
@@ -156,18 +157,18 @@ paths:
                   - Tag Name
                   - Tag Name
                   backfill:
-                    days: 4.589623110260823E7
+                    days: 9.882148536761618E7
                     startFrom: 2021-01-06T03:24:53.000Z
                   company:
                     dotNumbers:
-                    - tempor ea cupidatat incididunt proident
-                    - cupidatat occaecat do enim
-                    name: minim nostrud
+                    - ipsum in
+                    - anim pariatur Excepteur cupidatat enim
+                    name: ipsum irure labore
                   credentials:
-                    database: amet ut laborum est
-                    password: esse ut nostrud
-                    username: nisi in culpa
-                  externalId: ullamco dolore ipsum
+                    database: sint in dolore
+                    password: tempor sed minim
+                    username: ut incididunt aliqua
+                  externalId: quis proident
                   provider: geotab
                   syncMode: automatic
             schema:
@@ -233,12 +234,12 @@ paths:
               Update Current Connection:
                 value:
                   tags:
-                  - dolor in magna
-                  - reprehenderit dolor nostrud
+                  - esse sit veniam et
+                  - sunt u
                   company:
                     name: Acme Inc.
-                  externalId: ad sed dolore cupidatat
-                  status: laborum sed consectetur
+                  externalId: eu cillum
+                  status: incididunt reprehenderit sunt
                   syncMode: automatic
             schema:
               $ref: '#/components/schemas/ConnectionsUpdateCurrentConnectionDetailsRequest'
@@ -954,9 +955,9 @@ paths:
         name: startDate
         required: false
         schema:
-          example: 1995-04-25
+          example: 2013-12-08
           type: string
-          x-konfig-original-example: 1995-04-25
+          x-konfig-original-example: 2013-12-08
           x-konfig-generated-schema: konfig-generated-schema-paths--hos-daily-logs-get-parameters-2-schema
         style: form
       - description: Only include daily logs from on or before a specific date
@@ -965,9 +966,9 @@ paths:
         name: endDate
         required: false
         schema:
-          example: 1995-04-25
+          example: 2013-12-08
           type: string
-          x-konfig-original-example: 1995-04-25
+          x-konfig-original-example: 2013-12-08
           x-konfig-generated-schema: konfig-generated-schema-paths--hos-daily-logs-get-parameters-3-schema
         style: form
       - description: Only include records that were last modified after a provided
@@ -1183,9 +1184,9 @@ paths:
         name: lastReportedAfter
         required: false
         schema:
-          example: 2023-06-07
+          example: 1973-09-17
           type: string
-          x-konfig-original-example: 2023-06-07
+          x-konfig-original-example: 1973-09-17
           x-konfig-generated-schema: konfig-generated-schema-paths--issues-get-parameters-2-schema
         style: form
       - description: Timestamp to end when the issue was last observed
@@ -1194,9 +1195,9 @@ paths:
         name: lastReportedBefore
         required: false
         schema:
-          example: 2023-06-07
+          example: 1973-09-17
           type: string
-          x-konfig-original-example: 2023-06-07
+          x-konfig-original-example: 1973-09-17
           x-konfig-generated-schema: konfig-generated-schema-paths--issues-get-parameters-3-schema
         style: form
       - description: Expand related resources to see all details
@@ -1227,9 +1228,9 @@ paths:
         name: errorCode
         required: false
         schema:
-          example: invalid_source_id
+          example: exceeded_retention_window
           type: string
-          x-konfig-original-example: invalid_source_id
+          x-konfig-original-example: exceeded_retention_window
           x-konfig-generated-schema: konfig-generated-schema-paths--issues-get-parameters-6-schema
         style: form
       - description: Filter issues to a specific status
@@ -1264,19 +1265,11 @@ paths:
         name: issueId
         required: true
         schema:
-          example: tempor in aliqua
+          example: qui tempor
           type: string
-          x-konfig-original-example: tempor in aliqua
+          x-konfig-original-example: qui tempor
           x-konfig-generated-schema: konfig-generated-schema-paths--issues-issueId-resolve-parameters-0-schema
         style: simple
-      requestBody:
-        content:
-          application/json:
-            examples:
-              Resolve Issue:
-                value: {}
-            schema:
-              $ref: '#/components/schemas/IssuesMarkResolvedRequest'
       responses:
         "200":
           description: ""
@@ -1285,7 +1278,6 @@ paths:
       - Issues
       x-konfig-operation-can-have-single-parameter: true
       x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-post--issues-issueId-resolve
-      x-content-type: application/json
       x-accepts: application/json
   /providers:
     get:
@@ -2224,6 +2216,90 @@ paths:
       x-konfig-operation-can-have-single-parameter: true
       x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-get--trips
       x-accepts: application/json
+  /devices:
+    get:
+      description: List all devices in the connected account.
+      operationId: Devices_getAllDevices
+      parameters:
+      - description: Pagination cursor to start requests from
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          example: "{{nextCursor}}"
+          type: string
+          x-konfig-original-example: "{{nextCursor}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--devices-get-parameters-0-schema
+        style: form
+      - description: The maximum number of results to return in a page.
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          example: "1"
+          type: string
+          x-konfig-original-example: "1"
+          x-konfig-generated-schema: konfig-generated-schema-paths--devices-get-parameters-1-schema
+        style: form
+      - description: Only include records that were last modified after a provided
+          date.
+        explode: true
+        in: query
+        name: modifiedAfter
+        required: false
+        schema:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--devices-get-parameters-2-schema
+        style: form
+      - description: Only include records that were last modified before a provided
+          date.
+        explode: true
+        in: query
+        name: modifiedBefore
+        required: false
+        schema:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--devices-get-parameters-3-schema
+        style: form
+      - description: Include raw responses used to normalize model. Used for debugging
+          or accessing unique properties that are not unified.
+        explode: true
+        in: query
+        name: raw
+        required: false
+        schema:
+          example: "true"
+          type: string
+          x-konfig-original-example: "true"
+          x-konfig-generated-schema: konfig-generated-schema-paths--devices-get-parameters-4-schema
+        style: form
+      - description: (Required) The token returned when a user authenticated their
+          account. This authorizes access to a specific account.
+        explode: false
+        in: header
+        name: connection-token
+        required: false
+        schema:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--devices-get-parameters-5-schema
+        style: simple
+      responses:
+        "200":
+          description: ""
+      summary: List Devices
+      tags:
+      - Devices
+      x-konfig-operation-can-have-single-parameter: true
+      x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-get--devices
+      x-accepts: application/json
 components:
   schemas:
     AuthenticationExchangeTokenRequest:
@@ -2239,20 +2315,20 @@ components:
     ConnectionsCreateCustomConnectionRequest:
       example:
         credentials:
-          database: amet ut laborum est
-          password: esse ut nostrud
-          username: nisi in culpa
+          database: sint in dolore
+          password: tempor sed minim
+          username: ut incididunt aliqua
         provider: geotab
         syncMode: automatic
         backfill:
           startFrom: 2021-01-06T03:24:53.000Z
-          days: 45896231.10260823
-        externalId: ullamco dolore ipsum
+          days: 98821485.36761618
+        externalId: quis proident
         company:
-          name: minim nostrud
+          name: ipsum irure labore
           dotNumbers:
-          - tempor ea cupidatat incididunt proident
-          - cupidatat occaecat do enim
+          - ipsum in
+          - anim pariatur Excepteur cupidatat enim
         tags:
         - Tag Name
         - Tag Name
@@ -2278,9 +2354,9 @@ components:
         credentials:
           $ref: '#/components/schemas/ConnectionsCreateCustomConnectionRequest_credentials'
         externalId:
-          example: ullamco dolore ipsum
+          example: quis proident
           type: string
-          x-konfig-original-example: ullamco dolore ipsum
+          x-konfig-original-example: quis proident
           x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-externalId
         provider:
           example: geotab
@@ -2296,39 +2372,39 @@ components:
     ConnectionsUpdateCurrentConnectionDetailsRequest:
       example:
         syncMode: automatic
-        externalId: ad sed dolore cupidatat
+        externalId: eu cillum
         company:
           name: Acme Inc.
         tags:
-        - dolor in magna
-        - reprehenderit dolor nostrud
-        status: laborum sed consectetur
+        - esse sit veniam et
+        - sunt u
+        status: incididunt reprehenderit sunt
       properties:
         tags:
           example:
-          - dolor in magna
-          - reprehenderit dolor nostrud
+          - esse sit veniam et
+          - sunt u
           items:
-            example: dolor in magna
+            example: esse sit veniam et
             type: string
-            x-konfig-original-example: dolor in magna
+            x-konfig-original-example: esse sit veniam et
             x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsUpdateCurrentConnectionDetailsRequest-properties-tags-items
           type: array
           x-konfig-original-example:
-          - dolor in magna
-          - reprehenderit dolor nostrud
+          - esse sit veniam et
+          - sunt u
           x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsUpdateCurrentConnectionDetailsRequest-properties-tags
         company:
           $ref: '#/components/schemas/ConnectionsUpdateCurrentConnectionDetailsRequest_company'
         externalId:
-          example: ad sed dolore cupidatat
+          example: eu cillum
           type: string
-          x-konfig-original-example: ad sed dolore cupidatat
+          x-konfig-original-example: eu cillum
           x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsUpdateCurrentConnectionDetailsRequest-properties-externalId
         status:
-          example: laborum sed consectetur
+          example: incididunt reprehenderit sunt
           type: string
-          x-konfig-original-example: laborum sed consectetur
+          x-konfig-original-example: incididunt reprehenderit sunt
           x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsUpdateCurrentConnectionDetailsRequest-properties-status
         syncMode:
           example: automatic
@@ -2372,12 +2448,6 @@ components:
           x-konfig-original-example: /reports
           x-konfig-generated-schema: konfig-generated-schema-components-schemas-DataManagementMakePassthroughRequestRequest-properties-path
       type: object
-    IssuesMarkResolvedRequest:
-      example: {}
-      properties: {}
-      type: object
-      x-konfig-original-example: {}
-      x-konfig-generated-schema: konfig-generated-schema-components-schemas-IssuesMarkResolvedRequest
     konfig-generated-schema-paths--connections-get-parameters-0-schema:
       example: "{{nextCursor}}"
       type: string
@@ -2395,7 +2465,7 @@ components:
       type: string
       x-do-not-generate: true
     konfig-generated-schema-paths--connections-get-parameters-4-schema:
-      example: tempor in aliqua
+      example: qui tempor
       type: string
       x-do-not-generate: true
     konfig-generated-schema-paths--connections-current-get-parameters-0-schema:
@@ -2591,11 +2661,11 @@ components:
       type: string
       x-do-not-generate: true
     konfig-generated-schema-paths--hos-daily-logs-get-parameters-2-schema:
-      example: 1995-04-25
+      example: 2013-12-08
       type: string
       x-do-not-generate: true
     konfig-generated-schema-paths--hos-daily-logs-get-parameters-3-schema:
-      example: 1995-04-25
+      example: 2013-12-08
       type: string
       x-do-not-generate: true
     konfig-generated-schema-paths--hos-daily-logs-get-parameters-4-schema:
@@ -2659,11 +2729,11 @@ components:
       type: string
       x-do-not-generate: true
     konfig-generated-schema-paths--issues-get-parameters-2-schema:
-      example: 2023-06-07
+      example: 1973-09-17
       type: string
       x-do-not-generate: true
     konfig-generated-schema-paths--issues-get-parameters-3-schema:
-      example: 2023-06-07
+      example: 1973-09-17
       type: string
       x-do-not-generate: true
     konfig-generated-schema-paths--issues-get-parameters-4-schema:
@@ -2675,7 +2745,7 @@ components:
       type: string
       x-do-not-generate: true
     konfig-generated-schema-paths--issues-get-parameters-6-schema:
-      example: invalid_source_id
+      example: exceeded_retention_window
       type: string
       x-do-not-generate: true
     konfig-generated-schema-paths--issues-get-parameters-7-schema:
@@ -2683,7 +2753,7 @@ components:
       type: string
       x-do-not-generate: true
     konfig-generated-schema-paths--issues-issueId-resolve-parameters-0-schema:
-      example: tempor in aliqua
+      example: qui tempor
       type: string
       x-do-not-generate: true
     konfig-generated-schema-paths--safety-events-get-parameters-0-schema:
@@ -2962,6 +3032,30 @@ components:
       example: "{{connectionToken}}"
       type: string
       x-do-not-generate: true
+    konfig-generated-schema-paths--devices-get-parameters-0-schema:
+      example: "{{nextCursor}}"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--devices-get-parameters-1-schema:
+      example: "1"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--devices-get-parameters-2-schema:
+      example: 2021-01-06T03:24:53.000Z
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--devices-get-parameters-3-schema:
+      example: 2021-01-06T03:24:53.000Z
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--devices-get-parameters-4-schema:
+      example: "true"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-paths--devices-get-parameters-5-schema:
+      example: "{{connectionToken}}"
+      type: string
+      x-do-not-generate: true
     konfig-generated-schema-components-schemas-AuthenticationExchangeTokenRequest-properties-publicToken:
       example: INSERT_PUBLIC_TOKEN
       type: string
@@ -2980,7 +3074,7 @@ components:
       type: string
       x-do-not-generate: true
     konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-backfill-properties-days:
-      example: 45896231.10260823
+      example: 98821485.36761618
       type: number
       x-do-not-generate: true
     konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-backfill-properties-startFrom:
@@ -2989,35 +3083,35 @@ components:
       x-do-not-generate: true
     konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-company-properties-dotNumbers:
       example:
-      - tempor ea cupidatat incididunt proident
-      - cupidatat occaecat do enim
+      - ipsum in
+      - anim pariatur Excepteur cupidatat enim
       items:
-        example: tempor ea cupidatat incididunt proident
+        example: ipsum in
         type: string
       type: array
       x-do-not-generate: true
     ? konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-company-properties-dotNumbers-items
-    : example: tempor ea cupidatat incididunt proident
+    : example: ipsum in
       type: string
       x-do-not-generate: true
     konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-company-properties-name:
-      example: minim nostrud
+      example: ipsum irure labore
       type: string
       x-do-not-generate: true
     konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-credentials-properties-database:
-      example: amet ut laborum est
+      example: sint in dolore
       type: string
       x-do-not-generate: true
     konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-credentials-properties-password:
-      example: esse ut nostrud
+      example: tempor sed minim
       type: string
       x-do-not-generate: true
     konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-credentials-properties-username:
-      example: nisi in culpa
+      example: ut incididunt aliqua
       type: string
       x-do-not-generate: true
     konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-externalId:
-      example: ullamco dolore ipsum
+      example: quis proident
       type: string
       x-do-not-generate: true
     konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-provider:
@@ -3030,15 +3124,15 @@ components:
       x-do-not-generate: true
     konfig-generated-schema-components-schemas-ConnectionsUpdateCurrentConnectionDetailsRequest-properties-tags:
       example:
-      - dolor in magna
-      - reprehenderit dolor nostrud
+      - esse sit veniam et
+      - sunt u
       items:
-        example: dolor in magna
+        example: esse sit veniam et
         type: string
       type: array
       x-do-not-generate: true
     konfig-generated-schema-components-schemas-ConnectionsUpdateCurrentConnectionDetailsRequest-properties-tags-items:
-      example: dolor in magna
+      example: esse sit veniam et
       type: string
       x-do-not-generate: true
     konfig-generated-schema-components-schemas-ConnectionsUpdateCurrentConnectionDetailsRequest-properties-company-properties-name:
@@ -3046,11 +3140,11 @@ components:
       type: string
       x-do-not-generate: true
     konfig-generated-schema-components-schemas-ConnectionsUpdateCurrentConnectionDetailsRequest-properties-externalId:
-      example: ad sed dolore cupidatat
+      example: eu cillum
       type: string
       x-do-not-generate: true
     konfig-generated-schema-components-schemas-ConnectionsUpdateCurrentConnectionDetailsRequest-properties-status:
-      example: laborum sed consectetur
+      example: incididunt reprehenderit sunt
       type: string
       x-do-not-generate: true
     konfig-generated-schema-components-schemas-ConnectionsUpdateCurrentConnectionDetailsRequest-properties-syncMode:
@@ -3072,11 +3166,6 @@ components:
     konfig-generated-schema-components-schemas-DataManagementMakePassthroughRequestRequest-properties-path:
       example: /reports
       type: string
-      x-do-not-generate: true
-    konfig-generated-schema-components-schemas-IssuesMarkResolvedRequest:
-      example: {}
-      properties: {}
-      type: object
       x-do-not-generate: true
     konfig-generated-schema-single-parameter-schema-post--public-token-exchange:
       properties:
@@ -3111,9 +3200,9 @@ components:
           x-konfig-original-example: "123"
           x-konfig-generated-schema: konfig-generated-schema-paths--connections-get-parameters-3-schema
         tag:
-          example: tempor in aliqua
+          example: qui tempor
           type: string
-          x-konfig-original-example: tempor in aliqua
+          x-konfig-original-example: qui tempor
           x-konfig-generated-schema: konfig-generated-schema-paths--connections-get-parameters-4-schema
       type: object
       x-do-not-generate: true
@@ -3142,9 +3231,9 @@ components:
         backfill:
           properties:
             days:
-              example: 45896231.10260823
+              example: 98821485.36761618
               type: number
-              x-konfig-original-example: 4.589623110260823E7
+              x-konfig-original-example: 9.882148536761618E7
               x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-backfill-properties-days
             startFrom:
               example: 2021-01-06T03:24:53.000Z
@@ -3156,46 +3245,46 @@ components:
           properties:
             dotNumbers:
               example:
-              - tempor ea cupidatat incididunt proident
-              - cupidatat occaecat do enim
+              - ipsum in
+              - anim pariatur Excepteur cupidatat enim
               items:
-                example: tempor ea cupidatat incididunt proident
+                example: ipsum in
                 type: string
-                x-konfig-original-example: tempor ea cupidatat incididunt proident
+                x-konfig-original-example: ipsum in
                 x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-company-properties-dotNumbers-items
               type: array
               x-konfig-original-example:
-              - tempor ea cupidatat incididunt proident
-              - cupidatat occaecat do enim
+              - ipsum in
+              - anim pariatur Excepteur cupidatat enim
               x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-company-properties-dotNumbers
             name:
-              example: minim nostrud
+              example: ipsum irure labore
               type: string
-              x-konfig-original-example: minim nostrud
+              x-konfig-original-example: ipsum irure labore
               x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-company-properties-name
           type: object
         credentials:
           properties:
             database:
-              example: amet ut laborum est
+              example: sint in dolore
               type: string
-              x-konfig-original-example: amet ut laborum est
+              x-konfig-original-example: sint in dolore
               x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-credentials-properties-database
             password:
-              example: esse ut nostrud
+              example: tempor sed minim
               type: string
-              x-konfig-original-example: esse ut nostrud
+              x-konfig-original-example: tempor sed minim
               x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-credentials-properties-password
             username:
-              example: nisi in culpa
+              example: ut incididunt aliqua
               type: string
-              x-konfig-original-example: nisi in culpa
+              x-konfig-original-example: ut incididunt aliqua
               x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-credentials-properties-username
           type: object
         externalId:
-          example: ullamco dolore ipsum
+          example: quis proident
           type: string
-          x-konfig-original-example: ullamco dolore ipsum
+          x-konfig-original-example: quis proident
           x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-externalId
         provider:
           example: geotab
@@ -3230,17 +3319,17 @@ components:
           x-konfig-generated-schema: konfig-generated-schema-paths--connections-current-patch-parameters-0-schema
         tags:
           example:
-          - dolor in magna
-          - reprehenderit dolor nostrud
+          - esse sit veniam et
+          - sunt u
           items:
-            example: dolor in magna
+            example: esse sit veniam et
             type: string
-            x-konfig-original-example: dolor in magna
+            x-konfig-original-example: esse sit veniam et
             x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsUpdateCurrentConnectionDetailsRequest-properties-tags-items
           type: array
           x-konfig-original-example:
-          - dolor in magna
-          - reprehenderit dolor nostrud
+          - esse sit veniam et
+          - sunt u
           x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsUpdateCurrentConnectionDetailsRequest-properties-tags
         company:
           properties:
@@ -3251,14 +3340,14 @@ components:
               x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsUpdateCurrentConnectionDetailsRequest-properties-company-properties-name
           type: object
         externalId:
-          example: ad sed dolore cupidatat
+          example: eu cillum
           type: string
-          x-konfig-original-example: ad sed dolore cupidatat
+          x-konfig-original-example: eu cillum
           x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsUpdateCurrentConnectionDetailsRequest-properties-externalId
         status:
-          example: laborum sed consectetur
+          example: incididunt reprehenderit sunt
           type: string
-          x-konfig-original-example: laborum sed consectetur
+          x-konfig-original-example: incididunt reprehenderit sunt
           x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsUpdateCurrentConnectionDetailsRequest-properties-status
         syncMode:
           example: automatic
@@ -3602,14 +3691,14 @@ components:
           x-konfig-original-example: "1"
           x-konfig-generated-schema: konfig-generated-schema-paths--hos-daily-logs-get-parameters-1-schema
         startDate:
-          example: 1995-04-25
+          example: 2013-12-08
           type: string
-          x-konfig-original-example: 1995-04-25
+          x-konfig-original-example: 2013-12-08
           x-konfig-generated-schema: konfig-generated-schema-paths--hos-daily-logs-get-parameters-2-schema
         endDate:
-          example: 1995-04-25
+          example: 2013-12-08
           type: string
-          x-konfig-original-example: 1995-04-25
+          x-konfig-original-example: 2013-12-08
           x-konfig-generated-schema: konfig-generated-schema-paths--hos-daily-logs-get-parameters-3-schema
         modifiedAfter:
           example: 2021-01-06T03:24:53.000Z
@@ -3714,14 +3803,14 @@ components:
           x-konfig-original-example: "{{nextCursor}}"
           x-konfig-generated-schema: konfig-generated-schema-paths--issues-get-parameters-1-schema
         lastReportedAfter:
-          example: 2023-06-07
+          example: 1973-09-17
           type: string
-          x-konfig-original-example: 2023-06-07
+          x-konfig-original-example: 1973-09-17
           x-konfig-generated-schema: konfig-generated-schema-paths--issues-get-parameters-2-schema
         lastReportedBefore:
-          example: 2023-06-07
+          example: 1973-09-17
           type: string
-          x-konfig-original-example: 2023-06-07
+          x-konfig-original-example: 1973-09-17
           x-konfig-generated-schema: konfig-generated-schema-paths--issues-get-parameters-3-schema
         expand:
           example: ""
@@ -3734,9 +3823,9 @@ components:
           x-konfig-original-example: conn_01GV12VR4DJP70GD1ZBK0SDWFH
           x-konfig-generated-schema: konfig-generated-schema-paths--issues-get-parameters-5-schema
         errorCode:
-          example: invalid_source_id
+          example: exceeded_retention_window
           type: string
-          x-konfig-original-example: invalid_source_id
+          x-konfig-original-example: exceeded_retention_window
           x-konfig-generated-schema: konfig-generated-schema-paths--issues-get-parameters-6-schema
         status:
           example: ongoing
@@ -4205,15 +4294,56 @@ components:
       - raw
       - expand
       - connection-token
+    konfig-generated-schema-single-parameter-schema-get--devices:
+      properties:
+        cursor:
+          example: "{{nextCursor}}"
+          type: string
+          x-konfig-original-example: "{{nextCursor}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--devices-get-parameters-0-schema
+        limit:
+          example: "1"
+          type: string
+          x-konfig-original-example: "1"
+          x-konfig-generated-schema: konfig-generated-schema-paths--devices-get-parameters-1-schema
+        modifiedAfter:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--devices-get-parameters-2-schema
+        modifiedBefore:
+          example: 2021-01-06T03:24:53.000Z
+          type: string
+          x-konfig-original-example: 2021-01-06T03:24:53.000Z
+          x-konfig-generated-schema: konfig-generated-schema-paths--devices-get-parameters-3-schema
+        raw:
+          example: "true"
+          type: string
+          x-konfig-original-example: "true"
+          x-konfig-generated-schema: konfig-generated-schema-paths--devices-get-parameters-4-schema
+        connection-token:
+          example: "{{connectionToken}}"
+          type: string
+          x-konfig-original-example: "{{connectionToken}}"
+          x-konfig-generated-schema: konfig-generated-schema-paths--devices-get-parameters-5-schema
+      type: object
+      x-do-not-generate: true
+      x-konfig-is-parameter:
+      - cursor
+      - limit
+      - modifiedAfter
+      - modifiedBefore
+      - raw
+      - connection-token
     ConnectionsCreateCustomConnectionRequest_backfill:
       example:
         startFrom: 2021-01-06T03:24:53.000Z
-        days: 45896231.10260823
+        days: 98821485.36761618
       properties:
         days:
-          example: 45896231.10260823
+          example: 98821485.36761618
           type: number
-          x-konfig-original-example: 4.589623110260823E7
+          x-konfig-original-example: 9.882148536761618E7
           x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-backfill-properties-days
         startFrom:
           example: 2021-01-06T03:24:53.000Z
@@ -4223,51 +4353,51 @@ components:
       type: object
     ConnectionsCreateCustomConnectionRequest_company:
       example:
-        name: minim nostrud
+        name: ipsum irure labore
         dotNumbers:
-        - tempor ea cupidatat incididunt proident
-        - cupidatat occaecat do enim
+        - ipsum in
+        - anim pariatur Excepteur cupidatat enim
       properties:
         dotNumbers:
           example:
-          - tempor ea cupidatat incididunt proident
-          - cupidatat occaecat do enim
+          - ipsum in
+          - anim pariatur Excepteur cupidatat enim
           items:
-            example: tempor ea cupidatat incididunt proident
+            example: ipsum in
             type: string
-            x-konfig-original-example: tempor ea cupidatat incididunt proident
+            x-konfig-original-example: ipsum in
             x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-company-properties-dotNumbers-items
           type: array
           x-konfig-original-example:
-          - tempor ea cupidatat incididunt proident
-          - cupidatat occaecat do enim
+          - ipsum in
+          - anim pariatur Excepteur cupidatat enim
           x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-company-properties-dotNumbers
         name:
-          example: minim nostrud
+          example: ipsum irure labore
           type: string
-          x-konfig-original-example: minim nostrud
+          x-konfig-original-example: ipsum irure labore
           x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-company-properties-name
       type: object
     ConnectionsCreateCustomConnectionRequest_credentials:
       example:
-        database: amet ut laborum est
-        password: esse ut nostrud
-        username: nisi in culpa
+        database: sint in dolore
+        password: tempor sed minim
+        username: ut incididunt aliqua
       properties:
         database:
-          example: amet ut laborum est
+          example: sint in dolore
           type: string
-          x-konfig-original-example: amet ut laborum est
+          x-konfig-original-example: sint in dolore
           x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-credentials-properties-database
         password:
-          example: esse ut nostrud
+          example: tempor sed minim
           type: string
-          x-konfig-original-example: esse ut nostrud
+          x-konfig-original-example: tempor sed minim
           x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-credentials-properties-password
         username:
-          example: nisi in culpa
+          example: ut incididunt aliqua
           type: string
-          x-konfig-original-example: nisi in culpa
+          x-konfig-original-example: ut incididunt aliqua
           x-konfig-generated-schema: konfig-generated-schema-components-schemas-ConnectionsCreateCustomConnectionRequest-properties-credentials-properties-username
       type: object
     ConnectionsUpdateCurrentConnectionDetailsRequest_company:

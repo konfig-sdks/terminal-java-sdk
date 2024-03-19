@@ -84,7 +84,7 @@ public class ConnectionsCreateCustomConnectionRequestCompany {
    * @return dotNumbers
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "[\"tempor ea cupidatat incididunt proident\",\"cupidatat occaecat do enim\"]", value = "")
+  @ApiModelProperty(example = "[\"ipsum in\",\"anim pariatur Excepteur cupidatat enim\"]", value = "")
 
   public List<String> getDotNumbers() {
     return dotNumbers;
@@ -113,7 +113,7 @@ public class ConnectionsCreateCustomConnectionRequestCompany {
    * @return name
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "minim nostrud", value = "")
+  @ApiModelProperty(example = "ipsum irure labore", value = "")
 
   public String getName() {
     return name;

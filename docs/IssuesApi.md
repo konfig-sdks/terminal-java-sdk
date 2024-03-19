@@ -40,11 +40,11 @@ public class Example {
     Terminal client = new Terminal(configuration);
     String limit = "1"; // The maximum number of results to return in a page.
     String cursor = "{{nextCursor}}"; // Pagination cursor to start requests from
-    String lastReportedAfter = "2023-06-07"; // Timestamp to start when the issue was last observed
-    String lastReportedBefore = "2023-06-07"; // Timestamp to end when the issue was last observed
+    String lastReportedAfter = "1973-09-17"; // Timestamp to start when the issue was last observed
+    String lastReportedBefore = "1973-09-17"; // Timestamp to end when the issue was last observed
     String expand = ""; // Expand related resources to see all details
     String connectionId = "conn_01GV12VR4DJP70GD1ZBK0SDWFH"; // Filter issues to a specific connection
-    String errorCode = "invalid_source_id"; // Filter issues to a specific error code
+    String errorCode = "exceeded_retention_window"; // Filter issues to a specific error code
     String status = "ongoing"; // Filter issues to a specific status
     try {
       client
@@ -126,7 +126,7 @@ null (empty response body)
 
 <a name="markResolved"></a>
 # **markResolved**
-> markResolved(issueId).body(body).execute();
+> markResolved(issueId).execute();
 
 Resolve Issue
 
@@ -154,7 +154,7 @@ public class Example {
     // Configure HTTP bearer authorization: bearerAuth
     configuration.token = "BEARER TOKEN";
     Terminal client = new Terminal(configuration);
-    String issueId = "tempor in aliqua"; // (Required) 
+    String issueId = "qui tempor"; // (Required) 
     try {
       client
               .issues
@@ -191,7 +191,6 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **issueId** | **String**| (Required)  | |
-| **body** | **Object**|  | [optional] |
 
 ### Return type
 
@@ -203,7 +202,7 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: Not defined
 
 ### HTTP response details

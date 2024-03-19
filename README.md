@@ -168,6 +168,7 @@ Class | Method | HTTP request | Description
 *DataManagementApi* | [**listSyncHistory**](docs/DataManagementApi.md#listSyncHistory) | **GET** /syncs | List Sync History
 *DataManagementApi* | [**makePassthroughRequest**](docs/DataManagementApi.md#makePassthroughRequest) | **POST** /passthrough | Passthrough
 *DataManagementApi* | [**requestSyncManual**](docs/DataManagementApi.md#requestSyncManual) | **POST** /syncs | Request Sync
+*DevicesApi* | [**getAllDevices**](docs/DevicesApi.md#getAllDevices) | **GET** /devices | List Devices
 *DriversApi* | [**getDetails**](docs/DriversApi.md#getDetails) | **GET** /drivers/{id} | Get Driver
 *DriversApi* | [**list**](docs/DriversApi.md#list) | **GET** /drivers | List Drivers
 *GroupsApi* | [**getAllGroups**](docs/GroupsApi.md#getAllGroups) | **GET** /groups | List Groups

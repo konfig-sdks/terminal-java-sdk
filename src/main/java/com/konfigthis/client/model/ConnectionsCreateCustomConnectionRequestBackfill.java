@@ -83,7 +83,7 @@ public class ConnectionsCreateCustomConnectionRequestBackfill {
    * @return days
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "45896231.10260823", value = "")
+  @ApiModelProperty(example = "98821485.36761618", value = "")
 
   public Double getDays() {
     return days;
